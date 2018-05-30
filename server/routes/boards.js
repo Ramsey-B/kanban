@@ -5,84 +5,96 @@ let session = require('../auth/session')
 
 //get users boards
 router.get('/boards', (req, res) => {
-  Users.findById(req.session.uid)
-    .then(user => {
-      Boards.find({
-        userId: req.session.uid
-      }).then(boards => {
-        res.status(200).send(boards)
-      }).catch(err => {
-        res.status(400).send({ message: 'oh noes no boardz' })
-      })
-    })
-    .catch(err => {
-      res.status(401).send({ message: "plz login" })
-    })
+  Boards.find({
+    userId: req.session.uid
+  }).then(boards => {
+    res.status(200).send(boards)
+  }).catch(err => {
+    res.status(400).send({ message: 'oh noes no boardz', err })
+  })
 })
+
 //find board by id
 router.get('/board/:id', (req, res) => {
-  Users.findById(req.session.uid)
-   .then(user => {
-     Boards.findById(req.params.id)
-      .then(board => {
-        res.status(200).send(board)
-      })
-      .catch(err => {
-        res.status(400).send({message: "oh noes no boardz"})
-      })
-   })
+  Boards.findById(req.params.id)
+    .then(board => {
+      res.status(200).send(board)
+    })
+    .catch(err => {
+      res.status(400).send({ message: "oh noes no boardz", err })
+    })
 })
 //add new boards
 router.post('/new-board', (req, res) => {
-  Users.findById(req.session.uid)
-    .then(user => {
-      req.body.userId = req.session.uid
-      Boards.create(req.body)
-        .then(newBoard => {
-          res.status(200).send(newBoard)
-        })
-        .catch(err => {
-          res.status(400).send({ message: "erroz" })
-        })
+  req.body.userId = req.session.uid
+  Boards.create(req.body)
+    .then(newBoard => {
+      res.status(200).send(newBoard)
     })
     .catch(err => {
-      res.status(401).send({ message: "Plz logz in" })
+      res.status(400).send({ message: "erroz", err })
     })
 })
+
 //edit boards
 router.put('/board/:id', (req, res) => {
-  Users.findById(req.session.uid)
-    .then(user => {
-      Boards.findByIdAndUpdate(req.params.id, req.body, {
-        new: true
+  Boards.findByIdAndUpdate(req.params.id, req.body, {
+    new: true
+  })
+    .then(board => {
+      res.status(200).send(board)
+    })
+    .catch(err => {
+      res.send(400).send({ message: "erroz", err })
+    })
+})
+
+
+//add single list to board
+router.put('/board/:id/list/', (req, res) => {
+  Boards.findById(req.params.id)
+    .then(board => {
+      board.lists.addToSet(req.body)
+      board.save().then(newBoard => {
+        res.status(200).send(newBoard)
       })
-        .then(board => {
-          res.status(200).send(board)
+    })
+    .catch(err => {
+      res.send(400).send({ message: "erroz", err })
+    })
+})
+
+//add single task to board
+router.put('/board/:id/list/:listId/task/', (req, res) => {
+  Boards.findById(req.params.id)
+    .then(board => {
+      board.lists.findById(req.params.listId)
+        .then(list => {
+          list.tasks.addToSet(req.body)
+          board.save().then(newBoard => {
+            res.status(200).send(newBoard)
+          })
         })
         .catch(err => {
-          res.send(400).send({ message: "erroz" })
+          res.send(400).send({ message: "erroz", err })
         })
     })
     .catch(err => {
-      res.send(401).send({ message: "why no logz in????" })
+      res.send(400).send({ message: "erroz", err })
     })
 })
+
 //delete boards
 router.delete('/board/:id', (req, res) => {
-  Users.findById(req.session.uid)
-    .then(user => {
-      Boards.findByIdAndRemove(req.params.id)
-        .then(data => {
-          res.send("itz gonez!!!")
-        })
-        .catch(err => {
-          res.status(400).send({ message: "oh noes it brokez" })
-        })
+  Boards.findByIdAndRemove(req.params.id)
+    .then(data => {
+      res.send("itz gonez!!!")
     })
     .catch(err => {
-      res.status(400).send({ message: "oh noes it brokez" })
+      res.status(400).send({ message: "oh noes it brokez", err })
     })
 })
+
 
 module.exports = {
   router

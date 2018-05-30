@@ -21,17 +21,34 @@ export default new vuex.Store({
     }
   },
   actions: {
-    login({dispatch, commit}, payload) {
+    login({ dispatch, commit }, payload) {
       server.post('/login', payload)
-       .then(user => {
-        commit('setUser', user)
-       })
+        .then(user => {
+          router.push('/')
+          commit('setUser', user)
+        })
+        .catch(res => {
+          console.log(res.data)
+        })
     },
-    register({dispatch, commit}, payload) {
-      server.post('/register', payload) 
-       .then(newUser => {
-         commit('setUser', newUser)
-       })
+    register({ dispatch, commit }, payload) {
+      server.post('/register', payload)
+        .then(newUser => {
+          router.push('/')
+          commit('setUser', newUser)
+        })
+        .catch(res => {
+          console.log(res.data)
+        })
+    },
+    authenticate({ commit, dispatch }) {
+      server.get('/authenticate')
+        .then(res => {
+          commit('setUser', res.data)
+          router.push({ name: 'Home' })
+        })
+        .catch(res => {
+          console.log(res.data)
+        })
     }
-  }
-})
+  })

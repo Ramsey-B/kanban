@@ -23,14 +23,20 @@ var boardSchema = new Schema({
   lists: [listSchema],
   userId: {
     type: ObjectId,
-    ref: "user",
+    ref: "User",
     required: true
   }
 })
 
 boardSchema.pre('save', function(next) {
-  this.markModified('songs')
+  this.markModified('lists')
   next()
 })
+
+listSchema.pre('save', function(next) {
+  this.markModified('tasks')
+  next()
+})
+
 
 module.exports = mongoose.model(schemaName, boardSchema)
