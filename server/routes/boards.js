@@ -25,7 +25,7 @@ router.get('/board/:id', (req, res) => {
     })
 })
 //add new boards
-router.post('/new-board', (req, res) => {
+router.post('/board', (req, res) => {
   req.body.userId = req.session.uid
   Boards.create(req.body)
     .then(newBoard => {
