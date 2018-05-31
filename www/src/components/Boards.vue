@@ -1,5 +1,11 @@
 <template>
   <div class="boards">
+    <button @click="toggleAdd">Adz Bordz</button>
+    <form v-if="toggleBoard" v-on:submit.prevent="addBoard">
+      <input type="text" v-model="board.title">
+      <input type="text" v-model="board.description">
+      <button type="submit">Submit</button>
+    </form>
     <div v-for="board in boards" :key="board._id">
       <router-link :to="{ name: 'Lists', params: { id: board._id }}">
         <h2>{{board.title}}</h2>
@@ -19,7 +25,11 @@
     },
     data() {
       return {
-
+        toggleBoard: false,
+        board: {
+          title: '',
+          description: ''
+        }
       }
     },
     computed: {
@@ -27,7 +37,21 @@
         return this.$store.state.boards
       }
     },
-    methods: {}
+    methods: {
+      toggleAdd() {
+        this.toggleBoard = !this.toggleBoard
+      },
+      addBoard() {
+        var newBoard = {
+          title: this.board.title,
+          description: this.board.description
+        }
+        this.$store.dispatch('addBoard', newBoard)
+        this.board.title = ''
+        this.board.description = ''
+        this.toggleBoard = !this.toggleBoard
+      }
+    }
   }
 
 </script>

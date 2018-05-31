@@ -1,18 +1,23 @@
 <template>
   <div class="tasks">
-    {{tasks}}
+    <div v-for="task in tasks" :key="task._id">
+      <p>{{task.description}}
+        <button @click="commentToggle">Add</button>
+      </p>
+      <form v-on:submit.prevent="addComment" v-if="toggleComment">
+        <input type="text" v-model="comment">
+        <button type="submit">submit</button>
+      </form>
+  </div>
   </div>
 </template>
 
 <script>
   export default {
     name: 'Tasks',
-    mounted() {
-      this.$store.dispatch('selectList', this.$route.params.listId)
-    },
     data() {
       return {
-
+        toggleComment: false
       }
     },
     computed: {
@@ -20,12 +25,14 @@
         return this.$store.state.activeList.tasks
       }
     },
-    methods: {}
+    methods: {
+      commentToggle() {
+        this.toggleComment = !this.toggleComment
+      }
+    }
   }
 
 </script>
 
 <style>
-
-
 </style>

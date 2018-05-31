@@ -68,12 +68,10 @@ router.put('/board/:id/list/', (req, res) => {
 router.put('/board/:id/list/:listId/task/', (req, res) => {
   Boards.findById(req.params.id)
     .then(board => {
-      board.lists.findById(req.params.listId)
-        .then(list => {
+      var list = board.lists.id(req.params.listId)
           list.tasks.addToSet(req.body)
           board.save().then(newBoard => {
             res.status(200).send(newBoard)
-          })
         })
         .catch(err => {
           res.send(400).send({ message: "erroz", err })
@@ -83,7 +81,6 @@ router.put('/board/:id/list/:listId/task/', (req, res) => {
       res.send(400).send({ message: "erroz", err })
     })
 })
-
 //delete boards
 router.delete('/board/:id', (req, res) => {
   Boards.findByIdAndRemove(req.params.id)

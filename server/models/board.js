@@ -6,7 +6,8 @@ var ObjectId = Schema.Types.ObjectId
 var taskSchema = new Schema({
   title: {type: String},
   author: {type: String},
-  description: {type: String, required: true}
+  description: {type: String, required: true},
+  comment: {type: String}
 })
 
 var listSchema = new Schema({

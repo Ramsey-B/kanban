@@ -15,8 +15,7 @@ export default new vuex.Store({
   state: {
     user: {},
     boards: [],
-    activeBoard: {},
-    activeList: {}
+    activeBoard: {}
   },
   mutations: {
     setUser(state, user) {
@@ -28,8 +27,8 @@ export default new vuex.Store({
     setActiveBoard(state, board) {
       state.activeBoard = board
     },
-    setActiveList(state, list) {
-      state.activeList = list
+    setBoard(state, board) {
+      state.boards.push(board)
     }
   },
   actions: {
@@ -56,35 +55,61 @@ export default new vuex.Store({
     authenticate({ commit, dispatch }) {
       server.get('/authenticate')
         .then(res => {
-          commit('setUser', res.data)
+          commit('setUser', res.data.data)
           router.push('/')
         })
         .catch(res => {
           console.log(res.data)
         })
     },
-    getBoards({commit, dispatch}) {
+    getBoards({ commit, dispatch }) {
       server.get('/boards')
-       .then(res => {
-         commit('setBoards', res.data)
-       })
-       .catch(res => {
-        console.log(res.data)
-      })
+        .then(res => {
+          commit('setBoards', res.data)
+        })
+        .catch(res => {
+          console.log(res.data)
+        })
     },
-    selectBoard({commit, dispatch, state}, id) {
+    selectBoard({ commit, dispatch, state }, id) {
       var index = state.boards.findIndex(board => {
         return board._id == id
       })
       var activeBoard = state.boards[index]
       commit('setActiveBoard', activeBoard)
     },
-    selectList({commit, dispatch, state}, id) {
+    selectList({ commit, dispatch, state }, id) {
       var index = state.activeBoard.lists.findIndex(list => {
         return list._id == id
       })
       var activeList = state.activeBoard.lists[index]
       commit('setActiveList', activeList)
+    },
+    signOut({ commit, dispatch, state }) {
+      server.delete('/logout')
+        .then(res => {
+          commit('setUser', {})
+          router.push({ name: 'User' })
+        })
+        .catch(res => {
+          console.log(res.data)
+        })
+    },
+    addBoard({dispatch, commit, state}, board) {
+      board['author'] = state.user.displayName
+      server.post('/board', board)
+      .then(res => {
+        commit('setBoard', res.data)
+       })
+       .catch(err => {
+        console.log(err)
+      })
+    },
+    addTask({dispatch, commit, state}, task) {
+      server.put('/board/' +state.activeBoard._id+'/list/'+task.listId+'/task/', task) 
+       .then(res => {
+         commit('setActiveBoard', res.data)
+       })
     }
   }
 })
