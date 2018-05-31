@@ -22,13 +22,22 @@ export default new vuex.Store({
       state.user = user
     },
     setBoards(state, items) {
-      state.boards = items
+      var sortedBoards = items.sort((board1, board2) => {
+        return board2.created - board1.created
+      })
+      state.boards = sortedBoards
     },
     setActiveBoard(state, board) {
       state.activeBoard = board
     },
     setBoard(state, board) {
-      state.boards.push(board)
+      state.boards.unshift(board)
+    },
+    updateBoards(state, id) {
+      var index = state.boards.findIndex(board => {
+        return board._id == id
+      })
+      state.boards.splice(index, 1)
     }
   },
   actions: {
@@ -97,6 +106,8 @@ export default new vuex.Store({
     },
     addBoard({dispatch, commit, state}, board) {
       board['author'] = state.user.displayName
+      var date = new Date()
+      board['created'] = date.getTime()
       server.post('/board', board)
       .then(res => {
         commit('setBoard', res.data)
@@ -106,9 +117,36 @@ export default new vuex.Store({
       })
     },
     addTask({dispatch, commit, state}, task) {
+      task['author'] = state.user.displayName
+      var date = new Date()
+      task['created'] = date.getTime()
       server.put('/board/' +state.activeBoard._id+'/list/'+task.listId+'/task/', task) 
        .then(res => {
          commit('setActiveBoard', res.data)
+       })
+       .catch(err => {
+        console.log(err)
+      })
+    },
+    addList({dispatch, commit, state}, list) {
+      list['author'] = state.user.displayName
+      var date = new Date()
+      list['created'] = date.getTime()
+      server.put('/board/'+state.activeBoard._id+'/list/', list) 
+       .then(res => {
+         commit('setActiveBoard', res.data)
+       })
+       .catch(err => {
+        console.log(err)
+      })
+    },
+    deleteBoard({dispatch, commit}, id) {
+      server.delete('/board/'+id)
+       .then(res => {
+         commit('updateBoards', id)
+       })
+       .catch(err => {
+         console.log(err)
        })
     }
   }

@@ -13,6 +13,7 @@
         <h5>lists: {{board.lists.length}}</h5>
         <h6>author: {{board.author}}</h6>
       </router-link>
+      <button @click="removeBoard(board._id)">Detlz itz</button>
     </div>
   </div>
 </template>
@@ -50,6 +51,9 @@
         this.board.title = ''
         this.board.description = ''
         this.toggleBoard = !this.toggleBoard
+      },
+      removeBoard(id) {
+        this.$store.dispatch('deleteBoard', id)
       }
     }
   }
