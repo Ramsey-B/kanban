@@ -55,6 +55,7 @@ router.put('/board/:id/list/', (req, res) => {
   Boards.findById(req.params.id)
     .then(board => {
       req.body.userId = req.session.uid
+      req.body.boardId = req.params.id
       board.lists.addToSet(req.body)
       board.save().then(newBoard => {
         res.status(200).send(newBoard)
@@ -71,6 +72,7 @@ router.put('/board/:id/list/:listId/task/', (req, res) => {
     .then(board => {
       var list = board.lists.id(req.params.listId)
       req.body.userId = req.session.uid
+      req.body.listId = req.params.listId
       list.tasks.addToSet(req.body)
       board.save().then(newBoard => {
         res.status(200).send(newBoard)
@@ -93,14 +95,31 @@ router.delete('/board/:id', (req, res) => {
       res.status(400).send({ message: "oh noes it brokez", err })
     })
 })
-
+//delete list
 router.delete('/board/:id/list/:listId', (req, res) => {
   Boards.findById(req.params.id)
     .then(board => {
       var index = board.lists.findIndex(list => {
-        return list._id == req.params.listId
+        return list.id == req.params.listId
       })
       board.lists.splice(index, 1)
+      board.save().then(newBoard => {
+        res.status(200).send(newBoard)
+      })
+    })
+    .catch(err => {
+      res.status(400).send({ message: "oh noes it brokez", err })
+    })
+})
+
+router.delete('/board/:id/list/:listId/task/:taskId', (req, res) => {
+  Boards.findById(req.params.id)
+    .then(board => {
+      var list = board.lists.id(req.params.listId)
+      var index = list.tasks.findIndex(task => {
+        return task.id == req.params.taskId
+      })
+      list.tasks.splice(index, 1)
       board.save().then(newBoard => {
         res.status(200).send(newBoard)
       })

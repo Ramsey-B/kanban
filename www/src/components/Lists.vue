@@ -1,8 +1,8 @@
 <template>
   <div class="lists">
-    <h2>{{activeBoard.title}}</h2>
+    <h2 v-if="activeBoard._id">{{activeBoard.title}}</h2>
     <addList></addList>
-    <div v-for="list in lists" :key="list._id">
+    <div v-if="activeBoard._id" v-for="list in lists" :key="list._id">
       <list :list="list"></list>
     </div>
   </div>

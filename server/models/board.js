@@ -13,7 +13,8 @@ var taskSchema = new Schema({
     type: ObjectId,
     ref: "User",
     required: true
-  }
+  },
+  listId: {type: String, required: true}
 })
 
 var listSchema = new Schema({

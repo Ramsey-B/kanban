@@ -10,16 +10,20 @@
       <button type="submit">submit</button>
     </form>
     <h5>Tasks</h5>
-    <div v-for="task in list.tasks" :key="task._id">
-      <p>{{task.description}}</p>
+    <div v-for="task in list.tasks">
+        <tasks :task="task"></tasks>
     </div>
     <button @click='removeList(list._id)'>All donez</button>
   </div>
 </template>
 
 <script>
+  import tasks from './Tasks'
   export default {
     name: 'List',
+    components:{
+      tasks
+    },
     props: {
       list: {
         type: Object,
@@ -61,7 +65,7 @@
         this.toggleTask = !this.toggleTask
       },
       removeList(id){
-
+        this.$store.dispatch('deleteList', id)
       } 
     }
   }

@@ -38,7 +38,19 @@ export default new vuex.Store({
         return board._id == id
       })
       state.boards.splice(index, 1)
-    }
+    },
+    updateLists(state, id) {
+      var index = state.activeBoard.lists.findIndex(list => {
+        return list._id == id
+      })
+      state.activeBoard.lists.splice(index, 1)
+    },
+    updateTask(state, task) {
+      var index = state.activeBoard.lists.tasks.findIndex(task => {
+        return task._id == task._id
+      })
+      state.activeBoard.lists.tasks.splice(index, 1)
+    }   
   },
   actions: {
     login({ dispatch, commit }, payload) {
@@ -144,6 +156,24 @@ export default new vuex.Store({
       server.delete('/board/'+id)
        .then(res => {
          commit('updateBoards', id)
+       })
+       .catch(err => {
+         console.log(err)
+       })
+    },
+    deleteList({dispatch, commit, state}, id) {
+      server.delete('/board/'+state.activeBoard._id+'/list/'+id)
+       .then(res => {
+         commit('updateLists', id)
+       })
+       .catch(err => {
+         console.log(err)
+       })
+    },
+    deleteTask({dispatch, commit, state}, task) {
+      server.delete('/board/'+state.activeBoard._id+'/list/'+task.listId+'/task/' + task._id)
+       .then(res => {
+         commit('updateTasks', task)
        })
        .catch(err => {
          console.log(err)
