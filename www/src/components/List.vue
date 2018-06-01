@@ -1,5 +1,5 @@
 <template>
-  <div class="list">
+  <div>
     <h2>{{list.title}}</h2>
     <h4>description: {{list.description}}</h4>
     <h6>author: {{list.author}}</h6>
@@ -95,4 +95,12 @@
 </script>
 
 <style>
+  .list {
+    background-color: #333399;
+    margin: 3vh;
+    color: white;
+    border: 1px solid;
+    padding: 10px;
+    box-shadow: 5px 10px #14143b;
+  }
 </style>
