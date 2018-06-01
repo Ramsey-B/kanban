@@ -1,13 +1,14 @@
 <template>
   <div class="tasks">
     <p>{{task.description}}</p>
+    <p>{{task.comment}}</p>
     <button @click="commentToggle">Add</button>
     <form v-on:submit.prevent="addComment" v-if="toggleComment">
       <input type="text" v-model="comment">
       <button type="submit">submit</button>
     </form>
     <button @click="removeTask(task)">Iz completez</button>
-    <button @click="toggleEdit">edit</button>
+    <button @click="toggleEdit(task)">edit</button>
     <form v-on:submit.prevent="editTask" v-if="editToggle">
       <input type="text" v-model="edit.description">
       <input type="text" v-model="edit.comment">
