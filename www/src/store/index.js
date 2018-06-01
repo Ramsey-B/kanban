@@ -183,6 +183,10 @@ export default new vuex.Store({
        })
     },
     editBoard({dispatch, commit, state}, edit) {
+      var index = state.boards.findIndex(board => {
+        return board._id == edit._id
+      })
+      state.boards.splice(index, 1)
       server.put('/board/' +edit._id, edit)
        .then(res => {
          commit('setBoard', res.data)
@@ -195,6 +199,7 @@ export default new vuex.Store({
       var index = state.activeBoard.lists.findIndex(list => {
         return list._id == edit._id
       })
+      edit['tasks'] = state.activeBoard.lists[index].tasks
       state.activeBoard.lists.splice(index, 1)
       edit['author'] = state.user.displayName
       var date = new Date()
@@ -203,7 +208,6 @@ export default new vuex.Store({
       dispatch('editBoard', state.activeBoard)
     },
     editTask({dispatch, commit, state}, edit) {
-      debugger
       var listIndex = state.activeBoard.lists.findIndex(list => {
         return list._id == edit.listId
       })
@@ -214,7 +218,6 @@ export default new vuex.Store({
       edit['author'] = state.user.displayName
       var date = new Date()
       edit['created'] = date.getTime()
-      debugger
       state.activeBoard.lists[listIndex].tasks.unshift(edit)
       dispatch('editBoard', state.activeBoard)
     }

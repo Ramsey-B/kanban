@@ -38,7 +38,6 @@
     computed: {},
     methods: {
       removeBoard(id) {
-        debugger
         this.$store.dispatch('deleteBoard', id)
       },
       toggleEdit(board) {

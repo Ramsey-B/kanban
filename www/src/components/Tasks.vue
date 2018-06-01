@@ -2,11 +2,6 @@
   <div class="tasks">
     <p>{{task.description}}</p>
     <p>{{task.comment}}</p>
-    <button @click="commentToggle">Add</button>
-    <form v-on:submit.prevent="addComment" v-if="toggleComment">
-      <input type="text" v-model="comment">
-      <button type="submit">submit</button>
-    </form>
     <button @click="removeTask(task)">Iz completez</button>
     <button @click="toggleEdit(task)">edit</button>
     <form v-on:submit.prevent="editTask" v-if="editToggle">
@@ -28,7 +23,6 @@
     },
     data() {
       return {
-        toggleComment: false,
         editToggle: false,
         edit: {
           description: '',
@@ -44,9 +38,6 @@
       }
     },
     methods: {
-      commentToggle() {
-        this.toggleComment = !this.toggleComment
-      },
       removeTask(task) {
         this.$store.dispatch('deleteTask', task)
       },
@@ -54,7 +45,6 @@
         this.edit.description = task.description
         this.edit.comment = task.comment
         this.edit._id = task._id
-        debugger
         this.edit.listId = task.listId
         this.editToggle = !this.editToggle
       },
