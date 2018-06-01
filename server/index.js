@@ -2,12 +2,13 @@ var express = require('express')
 var bp = require('body-parser')
 var app = express()
 var cors = require('cors')
+let server = require('http').createServer(app)
 var port = process.env.PORT || 3000
 
 
-app.use(express.static(__dirname + "../www/dist"))
+app.use(express.static(__dirname + "/../www/dist"))
 
-var whitelist = ['http://localhost:8080', 'http://kanban-ramsey-maddy.herokuapp.com'];
+var whitelist = ['http://localhost:8080', 'https://kanban-ramsey-maddy.herokuapp.com'];
 var corsOptions = {
 	origin: function (origin, callback) {
 		var originIsWhitelisted = whitelist.indexOf(origin) !== -1;

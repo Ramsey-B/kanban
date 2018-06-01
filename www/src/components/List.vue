@@ -10,11 +10,12 @@
       <button type="submit">submit</button>
     </form>
     <h5>Tasks</h5>
-    <draggable :move="onMove">
-      <div v-for="task in tasks">
-        <tasks :task="task"></tasks>
-      </div>
-    </draggable>
+    <draggable :id="list._id" class="dragArea" v-model="tasks" :options="{draggable: '.task-item', group: 'tasks'}" :move="onMove"
+			 @end="onEnd">
+				<div v-for="task in tasks" class="task-item">
+					<tasks :task="task"></tasks>
+				</div>
+			</draggable>
     <button @click='removeList(list._id)'>All donez</button>
     <button @click="toggleEdit(list)">edit</button>
     <form v-on:submit.prevent="editList" v-if="editToggle">
@@ -57,7 +58,9 @@
           description: '',
           _id: ''
         },
-        draggedTask: ''
+        dragStartListId: '',
+				dragEndListId: '',
+				draggedTask: null
       }
     },
     computed: {
@@ -106,14 +109,36 @@
         this.$store.dispatch('editList', this.edit)
         this.editToggle = !this.editToggle
       },
-      onMove(e, o){
-        if (!this.draggedTask) {
+      onMove(e, o) {
+				if (!this.draggedTask) {
 					this.draggedTask = e.draggedContext.element;
 				}
-      },
-      onEnd() {
+				if (!e.relatedContext || !e.relatedContext.element) {
+          debugger
+					if (e.to.id != e.from.id) {
+						if (!this.dragStartListId)
+							this.dragStartListId = e.from.id;
+						e.draggedContext.element.listId = e.to.id
+						this.dragEndListId = e.to.id;
+					}
+				} else {
+					if (!this.dragStartListId)
+						this.dragStartListId = e.draggedContext.element.listId;
+					e.draggedContext.element.listId = e.relatedContext.element.listId
+          this.dragEndListId = e.relatedContext.element.listId
+				}
+			},
+			onEnd(e) {
         debugger
-      }
+				if (!this.dragEndListId && !this.dragStartListId)
+					return
+				this.$store.dispatch('setTaskIndexes', { listId: this.dragStartListId, tasks: this.$store.state.tasks[this.dragStartListId] })
+				if (this.dragStartListId != this.dragEndListId)
+					this.$store.dispatch('setTaskIndexes', { listId: this.dragEndListId, tasks: this.$store.state.tasks[this.dragEndListId], task: this.draggedTask })
+				this.dragStartListId = '';
+				this.dragEndListId = '';
+				this.draggedTask = null;
+			}
     }
   }
 
