@@ -6,21 +6,21 @@
       <input type="text" v-model="board.description">
       <button type="submit">Submit</button>
     </form>
-    <div v-for="board in boards" :key="board._id">
-      <router-link :to="{ name: 'Lists', params: { id: board._id }}">
-        <h2>{{board.title}}</h2>
-        <h4>description: {{board.description}}</h4>
-        <h5>lists: {{board.lists.length}}</h5>
-        <h6>author: {{board.author}}</h6>
-      </router-link>
-      <button @click="removeBoard(board._id)">Detlz itz</button>
+    <div class="row d-flex justify-content-center">
+      <div class="col-md-3 col-sm-12 card d-flex justify-content-around board" v-for="board in boards" :key="board._id">
+        <board :board="board"></board>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+  import board from './Board'
   export default {
     name: 'Boards',
+    components: {
+      board
+    },
     mounted() {
       this.$store.dispatch('getBoards')
     },
@@ -51,9 +51,6 @@
         this.board.title = ''
         this.board.description = ''
         this.toggleBoard = !this.toggleBoard
-      },
-      removeBoard(id) {
-        this.$store.dispatch('deleteBoard', id)
       }
     }
   }
@@ -61,4 +58,12 @@
 </script>
 
 <style>
+  .board {
+    background-color: #333399;
+    margin: 3vh;
+    color: white;
+    border: 1px solid;
+    padding: 10px;
+    box-shadow: 5px 10px #14143b;
+  }
 </style>
