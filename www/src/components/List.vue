@@ -10,9 +10,11 @@
       <button type="submit">submit</button>
     </form>
     <h5>Tasks</h5>
-    <div v-for="task in list.tasks">
-      <tasks :task="task"></tasks>
-    </div>
+    <draggable :move="onMove" @end="onEnd">
+      <div v-for="task in tasks">
+        <tasks :task="task"></tasks>
+      </div>
+    </draggable>
     <button @click='removeList(list._id)'>All donez</button>
     <button @click="toggleEdit(list)">edit</button>
     <form v-on:submit.prevent="editList" v-if="editToggle">
@@ -25,14 +27,20 @@
 
 <script>
   import tasks from './Tasks'
+  import draggable from 'vuedraggable'
   export default {
     name: 'List',
     components: {
-      tasks
+      tasks,
+      draggable
     },
     props: {
       list: {
         type: Object,
+        required: true
+      },
+      index: {
+        type: Number,
         required: true
       }
     },
@@ -57,6 +65,14 @@
       },
       activeBoard() {
         return this.$store.state.activeBoard
+      },
+      tasks: {
+        get: function() {
+          return this.$store.state.activeBoard.lists[this.index].tasks
+        },
+        set: function() {
+
+        }
       }
     },
     methods: {
@@ -88,6 +104,12 @@
       editList() {
         this.$store.dispatch('editList', this.edit)
         this.editToggle = !this.editToggle
+      },
+      onMove(e, o){
+        debugger
+      },
+      onEnd() {
+        debugger
       }
     }
   }

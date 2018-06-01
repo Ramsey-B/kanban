@@ -4,8 +4,8 @@
     <addList></addList>
     <div class="row d-flex justify-content-center">
       <draggable v-model="lists" class="d-flex flex-row">
-      <div v-if="activeBoard._id" v-for="list in lists" class="col-md-4 d-flex justify-content-around card list" :key="list._id">
-        <list :list="list"></list>
+      <div v-if="activeBoard._id" v-for="(list, index) in lists" class="col-md-4 d-flex justify-content-around card list" :key="list._id">
+        <list :list="list" :index="index"></list>
       </div>
       </draggable>
     </div>
