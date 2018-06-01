@@ -10,7 +10,7 @@
       <button type="submit">submit</button>
     </form>
     <h5>Tasks</h5>
-    <draggable :move="onMove" @end="onEnd">
+    <draggable :move="onMove">
       <div v-for="task in tasks">
         <tasks :task="task"></tasks>
       </div>
@@ -56,7 +56,8 @@
           title: '',
           description: '',
           _id: ''
-        }
+        },
+        draggedTask: ''
       }
     },
     computed: {
@@ -106,7 +107,9 @@
         this.editToggle = !this.editToggle
       },
       onMove(e, o){
-        debugger
+        if (!this.draggedTask) {
+					this.draggedTask = e.draggedContext.element;
+				}
       },
       onEnd() {
         debugger

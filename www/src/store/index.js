@@ -2,11 +2,13 @@ import vue from 'vue'
 import vuex from 'vuex'
 import axios from 'axios'
 import router from '../router'
+var production = !window.location.host.includes('localhost');
+var baseUrl = production ? '//kanban-ramsey-maddy.herokuapp.com/' : '//localhost:3000/';
 
 vue.use(vuex)
 
 var server = axios.create({
-  baseURL: 'http://localhost:3000',
+  baseURL: baseUrl,
   timeout: 3000,
   withCredentials: true
 })
