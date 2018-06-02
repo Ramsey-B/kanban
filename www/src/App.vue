@@ -4,16 +4,16 @@
     <nav class="navbar navbar-light top-header">
       <div>
         <router-link :to="{ name: 'Home'}" class="navbar-brand">
-          <a>Home</a>
+          <a>Hom</a>
         </router-link>
         <!-- <router-link :to="{ name: 'Playlists'}" class="navbar-brand" v-if="user._id" @click="getPosts">
           Playlists
         </router-link> -->
       </div>
-      <a class="navbar-brand" @click="login" v-if="!(user._id)">Sign up/Login</a>
+      <a class="navbar-brand" @click="login" v-if="!(user._id)">Zign In/Loginz</a>
       <div v-if="user._id" class="d-flex flex-column">
-        <a class="navbar-brand">User: {{user.displayName}}</a>
-        <a class="navbar-brand" @click="signOut">Sign out</a>
+        <a class="navbar-brand">Uzer: {{user.displayName}}</a>
+        <a class="navbar-brand" @click="signOut">Zign out</a>
       </div>
     </nav>
     <router-view/>
@@ -43,11 +43,12 @@
 
 <style>
   #app {
-    font-family: 'Avenir', Helvetica, Arial, sans-serif;
+    font-family: 'Chewy', cursive;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
-    color: #2c3e50;
+    color: #fff1bc;
+    background-color: #446e5c;
     margin-top: 60px;
   }
 </style>

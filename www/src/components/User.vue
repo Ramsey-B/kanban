@@ -1,26 +1,31 @@
 <template>
   <div class="user">
     <div class="login" v-if="showLogin">
-      <h1>Login</h1>
+      <h1>Loginz</h1>
       <form v-on:submit.prevent="login" class="form">
         <input class="input" type="email" name="email" placeholder=" email" id="email" v-model="user.email">
         <input class="input" type="password" name="password" placeholder=" password" id="name" v-model="user.password">
-        <button type="submit">Login</button>
+        <button type="submit">Loginz</button>
       </form>
-      <p class="user">Not a user ?
-        <em @click="toggle">Register</em>
+      <br>
+      <div>
+      <img src="../assets/2bhu43.jpg" class="cat-login">
+      </div>
+      <br>
+      <p class="user">Not a uzer ?
+        <em @click="toggle">Regizer</em>
       </p>
     </div>
     <div class="register" v-if="!showLogin">
-      <h1>Register</h1>
+      <h1>Regizer</h1>
       <form v-on:submit.prevent="register">
         <input class="input" type="email" name="email" placeholder=" email" id="email" v-model="user.email">
         <input class="input" type="text" name="name" placeholder=" Name" id="name" v-model="user.displayName">
         <input class="input" type="password" name="password" placeholder=" password" id="name" v-model="user.password">
-        <button type="submit">Register</button>
+        <button type="submit">Regizer</button>
       </form>
-      <p>Already a user?
-        <em @click="toggle">Login</em>
+      <p>Alredy uzer?
+        <em @click="toggle">Loginz</em>
       </p>
     </div>
   </div>
@@ -59,6 +64,9 @@
 </script>
 
 <style>
-
+.cat-login{
+  border-radius: 2rem;
+  box-shadow: 5px 5px #fff1bc;
+}
 
 </style>
