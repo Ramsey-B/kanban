@@ -1,7 +1,9 @@
 <template>
   <div class="tasks">
-    <p>{{task.description}}</p>
-    <p>{{task.comment}}</p>
+    <div class="task">
+      <h6 class="task-description">{{task.description}}</h6>
+      <p class='task-comment'>{{task.comment}}</p>
+    </div>
     <button @click="removeTask(task)">Iz completez</button>
     <button @click="toggleEdit(task)">edit</button>
     <form v-on:submit.prevent="editTask" v-if="editToggle">
@@ -58,4 +60,15 @@
 </script>
 
 <style>
+  .task {
+    display: block;
+  }
+
+  .task:hover .task-comment {
+    display: block;
+  }
+
+  .task-comment {
+    display: none;
+  }
 </style>
