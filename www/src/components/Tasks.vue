@@ -5,8 +5,8 @@
     <button @click="removeTask(task)">Iz completez</button>
     <button @click="toggleEdit(task)">edit</button>
     <form v-on:submit.prevent="editTask" v-if="editToggle">
-      <input type="text" v-model="edit.description">
-      <input type="text" v-model="edit.comment">
+      <input type="text" v-model="edit.description" placeholder="description">
+      <input type="text" v-model="edit.comment" placeholder="comment">
       <button type="submit">submit</button>
     </form>
   </div>

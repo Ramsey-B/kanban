@@ -5,8 +5,8 @@
     <h6>author: {{list.author}}</h6>
     <button @click="taskToggle">Add Task</button>
     <form v-on:submit.prevent="addTask(list._id)" v-if="toggleTask">
-      <input type="text" v-model="task.description">
-      <input type="text" v-model="task.comment">
+      <input type="text" v-model="task.description" placeholder="description">
+      <input type="text" v-model="task.comment" placeholder="comment">
       <button type="submit">submit</button>
     </form>
     <h5>Tasks</h5>
@@ -18,8 +18,8 @@
     <button @click='removeList(list._id)'>All donez</button>
     <button @click="toggleEdit(list)">edit</button>
     <form v-on:submit.prevent="editList" v-if="editToggle">
-      <input type="text" v-model="edit.title">
-      <input type="text" v-model="edit.description">
+      <input type="text" v-model="edit.title" placeholder="title">
+      <input type="text" v-model="edit.description" placeholder="description">
       <button type="submit">submit</button>
     </form>
   </div>

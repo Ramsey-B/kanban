@@ -25,6 +25,9 @@
     },
     mounted() {
       this.$store.dispatch('selectBoard', this.$route.params.id)
+      if(!this.$store.state.user._id){
+        router.push({name: 'User'})
+      }
     },
     data() {
       return {

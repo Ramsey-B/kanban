@@ -23,6 +23,9 @@
     },
     mounted() {
       this.$store.dispatch('getBoards')
+      if(!this.$store.state.user._id){
+        router.push({name: 'User'})
+      }
     },
     data() {
       return {

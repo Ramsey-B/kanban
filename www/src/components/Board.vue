@@ -9,8 +9,8 @@
     <button @click="removeBoard(board._id)">Detlz itz</button>
     <button @click="toggleEdit(board)">edit</button>
     <form v-if='editBoard' v-on:submit.prevent="changeBoard">
-      <input type="text" v-model="edit.title">
-      <input type="text" v-model="edit.description">
+      <input type="text" v-model="edit.title" placeholder="title">
+      <input type="text" v-model="edit.description" placeholder="description">
       <button type="submit">Submit</button>
     </form>
   </div>

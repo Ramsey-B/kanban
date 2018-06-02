@@ -3,8 +3,8 @@
     <button @click="toggleAdd">Add Lists</button>
     <div v-if="toggleList">
       <form v-on:submit.prevent="addList">
-        <input type="text" v-model="list.title">
-        <input type="text" v-model="list.description">
+        <input type="text" v-model="list.title" placeholder="List title" required>
+        <input type="text" v-model="list.description" placeholder="description">
         <button type="submit">Submit</button>
       </form>
     </div>
@@ -29,7 +29,10 @@
         this.toggleList = !this.toggleList
       },
       addList() {
-        this.$store.dispatch('addList', this.list)
+        var newList = this.list
+        this.$store.dispatch('addList', newList)
+        this.list.title = ''
+        this.list.description = ''
       }
     }
   }
