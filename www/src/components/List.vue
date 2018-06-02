@@ -10,12 +10,11 @@
       <button type="submit">submit</button>
     </form>
     <h5>Tasks</h5>
-    <draggable :id="list._id" class="dragArea" v-model="tasks" :options="{draggable: '.task-item', group: 'tasks'}" :move="onMove"
-			 @end="onEnd">
-				<div v-for="task in tasks" class="task-item">
-					<tasks :task="task"></tasks>
-				</div>
-			</draggable>
+    <draggable :id="list._id" class="dragArea" v-model="tasks" :options="{draggable: '.task-item', group: 'tasks'}" :move="onMove">
+      <div v-for="task in tasks" class="task-item">
+        <tasks :task="task"></tasks>
+      </div>
+    </draggable>
     <button @click='removeList(list._id)'>All donez</button>
     <button @click="toggleEdit(list)">edit</button>
     <form v-on:submit.prevent="editList" v-if="editToggle">
@@ -59,8 +58,8 @@
           _id: ''
         },
         dragStartListId: '',
-				dragEndListId: '',
-				draggedTask: null
+        dragEndListId: '',
+        draggedTask: null
       }
     },
     computed: {
@@ -71,11 +70,19 @@
         return this.$store.state.activeBoard
       },
       tasks: {
-        get: function() {
+        get: function () {
           return this.$store.state.activeBoard.lists[this.index].tasks
         },
-        set: function() {
-
+        set: function () {
+          var task = {
+          startList: this.dragStartListId,
+          endList: this.dragEndListId,
+          task: this.draggedTask
+        }
+        this.$store.dispatch('moveTask', task)
+        this.dragEndListId = ''
+        this.draggedTask = null
+        this.dragStartListId = ''
         }
       }
     },
@@ -110,35 +117,26 @@
         this.editToggle = !this.editToggle
       },
       onMove(e, o) {
-				if (!this.draggedTask) {
-					this.draggedTask = e.draggedContext.element;
-				}
-				if (!e.relatedContext || !e.relatedContext.element) {
-          debugger
-					if (e.to.id != e.from.id) {
-						if (!this.dragStartListId)
-							this.dragStartListId = e.from.id;
-						e.draggedContext.element.listId = e.to.id
-						this.dragEndListId = e.to.id;
-					}
-				} else {
-					if (!this.dragStartListId)
-						this.dragStartListId = e.draggedContext.element.listId;
-					e.draggedContext.element.listId = e.relatedContext.element.listId
+        if (!this.draggedTask) {
+          this.draggedTask = e.draggedContext.element;
+        }
+        if (!e.relatedContext || !e.relatedContext.element) {
+          if (e.to.id != e.from.id) {
+            if (!this.dragStartListId)
+              this.dragStartListId = e.from.id;
+            e.draggedContext.element.listId = e.to.id
+            this.dragEndListId = e.to.id;
+          }
+        } else {
+          if (!this.dragStartListId)
+            this.dragStartListId = e.draggedContext.element.listId;
+          e.draggedContext.element.listId = e.relatedContext.element.listId
           this.dragEndListId = e.relatedContext.element.listId
-				}
-			},
-			onEnd(e) {
-        debugger
-				if (!this.dragEndListId && !this.dragStartListId)
-					return
-				this.$store.dispatch('setTaskIndexes', { listId: this.dragStartListId, tasks: this.$store.state.tasks[this.dragStartListId] })
-				if (this.dragStartListId != this.dragEndListId)
-					this.$store.dispatch('setTaskIndexes', { listId: this.dragEndListId, tasks: this.$store.state.tasks[this.dragEndListId], task: this.draggedTask })
-				this.dragStartListId = '';
-				this.dragEndListId = '';
-				this.draggedTask = null;
-			}
+        }
+      },
+      moveTask() {
+        
+      }
     }
   }
 
@@ -152,5 +150,8 @@
     border: 1px solid;
     padding: 10px;
     box-shadow: 5px 10px #14143b;
+  }
+  .dragArea {
+    min-height: 3vh
   }
 </style>

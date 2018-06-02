@@ -222,6 +222,23 @@ export default new vuex.Store({
       edit['created'] = date.getTime()
       state.activeBoard.lists[listIndex].tasks.unshift(edit)
       dispatch('editBoard', state.activeBoard)
+    },
+    moveTask({dispatch, commit, state}, task) {
+      debugger
+      var startIndex = state.activeBoard.lists.findIndex(list => {
+        return task.startList == list._id
+      })
+      var endIndex = state.activeBoard.lists.findIndex(list => {
+        return task.endList == list._id
+      })
+      var startList = state.activeBoard.lists[startIndex]
+      var endList = state.activeBoard.lists[endIndex]
+      var taskIndex = startList.tasks.findIndex(startTask => {
+        return startTask._id == task.task._id
+      })
+      state.activeBoard.lists[startIndex].tasks.splice(taskIndex, 1)
+      state.activeBoard.lists[endIndex].tasks.unshift(task.task)
+      dispatch('editBoard', state.activeBoard)
     }
   }
 })
