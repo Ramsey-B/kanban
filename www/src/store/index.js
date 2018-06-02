@@ -176,13 +176,16 @@ export default new vuex.Store({
        })
     },
     deleteTask({dispatch, commit, state}, task) {
-      server.delete('/board/'+state.activeBoard._id+'/list/'+task.listId+'/task/' + task._id)
-       .then(res => {
-         commit('updateTasks', task)
-       })
-       .catch(err => {
-         console.log(err)
-       })
+      var lists = state.activeBoard.lists
+      var listIndex = lists.findIndex(list => {
+        return task.listId == list._id
+      })
+      var list = lists[listIndex]
+      var taskIndex = list.tasks.findIndex(newTask => {
+        return newTask._id == task._id
+      })
+      list.tasks.splice(taskIndex, 1)
+      dispatch('editList', list)
     },
     editBoard({dispatch, commit, state}, edit) {
       var index = state.boards.findIndex(board => {
@@ -202,11 +205,10 @@ export default new vuex.Store({
         return list._id == edit._id
       })
       edit['tasks'] = state.activeBoard.lists[index].tasks
-      state.activeBoard.lists.splice(index, 1)
       edit['author'] = state.user.displayName
       var date = new Date()
       edit['created'] = date.getTime()
-      state.activeBoard.lists.unshift(edit)
+      state.activeBoard.lists.splice(index, 1, edit)
       dispatch('editBoard', state.activeBoard)
     },
     editTask({dispatch, commit, state}, edit) {
@@ -221,23 +223,6 @@ export default new vuex.Store({
       var date = new Date()
       edit['created'] = date.getTime()
       state.activeBoard.lists[listIndex].tasks.unshift(edit)
-      dispatch('editBoard', state.activeBoard)
-    },
-    moveTask({dispatch, commit, state}, task) {
-      debugger
-      var startIndex = state.activeBoard.lists.findIndex(list => {
-        return task.startList == list._id
-      })
-      var endIndex = state.activeBoard.lists.findIndex(list => {
-        return task.endList == list._id
-      })
-      var startList = state.activeBoard.lists[startIndex]
-      var endList = state.activeBoard.lists[endIndex]
-      var taskIndex = startList.tasks.findIndex(startTask => {
-        return startTask._id == task.task._id
-      })
-      state.activeBoard.lists[startIndex].tasks.splice(taskIndex, 1)
-      state.activeBoard.lists[endIndex].tasks.unshift(task.task)
       dispatch('editBoard', state.activeBoard)
     }
   }

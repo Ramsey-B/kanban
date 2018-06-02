@@ -10,7 +10,7 @@
       <button type="submit">submit</button>
     </form>
     <h5>Tasks</h5>
-    <draggable :id="list._id" class="dragArea" v-model="tasks" :options="{draggable: '.task-item', group: 'tasks'}" :move="onMove">
+    <draggable :id="list._id" class="dragArea" v-model="tasks" :options="{draggable: '.task-item', group: 'tasks'}">
       <div v-for="task in tasks" class="task-item">
         <tasks :task="task"></tasks>
       </div>
@@ -73,16 +73,13 @@
         get: function () {
           return this.$store.state.activeBoard.lists[this.index].tasks
         },
-        set: function () {
-          var task = {
-          startList: this.dragStartListId,
-          endList: this.dragEndListId,
-          task: this.draggedTask
-        }
-        this.$store.dispatch('moveTask', task)
-        this.dragEndListId = ''
-        this.draggedTask = null
-        this.dragStartListId = ''
+        set: function (tasks) {
+          var newTasks = tasks.map(task => {
+            return task.listId = this.list._id
+          })
+          this.list.tasks = tasks
+          var list = this.list
+          this.$store.dispatch('editList', list)
         }
       }
     },
@@ -115,27 +112,6 @@
       editList() {
         this.$store.dispatch('editList', this.edit)
         this.editToggle = !this.editToggle
-      },
-      onMove(e, o) {
-        if (!this.draggedTask) {
-          this.draggedTask = e.draggedContext.element;
-        }
-        if (!e.relatedContext || !e.relatedContext.element) {
-          if (e.to.id != e.from.id) {
-            if (!this.dragStartListId)
-              this.dragStartListId = e.from.id;
-            e.draggedContext.element.listId = e.to.id
-            this.dragEndListId = e.to.id;
-          }
-        } else {
-          if (!this.dragStartListId)
-            this.dragStartListId = e.draggedContext.element.listId;
-          e.draggedContext.element.listId = e.relatedContext.element.listId
-          this.dragEndListId = e.relatedContext.element.listId
-        }
-      },
-      moveTask() {
-        
       }
     }
   }
@@ -151,6 +127,7 @@
     padding: 10px;
     box-shadow: 5px 10px #14143b;
   }
+
   .dragArea {
     min-height: 3vh
   }

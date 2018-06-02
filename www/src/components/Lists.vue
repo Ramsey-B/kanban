@@ -47,7 +47,6 @@
       editBoard(lists) {
         this.activeBoard.lists = lists
         var board = this.activeBoard
-        debugger
         this.$store.dispatch('editBoard', board)
       }
     }
