@@ -16,12 +16,14 @@
   import addList from './AddList'
   import draggable from 'vuedraggable'
   import list from './List'
+  import router from '../router'
   export default {
     name: 'Lists',
     components: {
       addList,
       list,
-      draggable
+      draggable,
+      router
     },
     mounted() {
       this.$store.dispatch('selectBoard', this.$route.params.id)

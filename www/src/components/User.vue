@@ -4,8 +4,8 @@
       <h1>Loginz</h1>
       <form v-on:submit.prevent="login" class="form">
         <input class="input" type="email" name="email" placeholder=" email" id="email" v-model="user.email">
-        <input class="input" type="password" name="password" placeholder=" password" id="name" v-model="user.password">
-        <button type="submit">Loginz</button>
+        <input class="input" type="password" name="password" placeholder=" pazzword" id="name" v-model="user.password">
+        <button class="btn btn-primary btn-success" type="submit">Loginz</button>
       </form>
       <br>
       <div>
@@ -20,10 +20,15 @@
       <h1>Regizer</h1>
       <form v-on:submit.prevent="register">
         <input class="input" type="email" name="email" placeholder=" email" id="email" v-model="user.email">
-        <input class="input" type="text" name="name" placeholder=" Name" id="name" v-model="user.displayName">
-        <input class="input" type="password" name="password" placeholder=" password" id="name" v-model="user.password">
-        <button type="submit">Regizer</button>
+        <input class="input" type="text" name="name" placeholder="nam" id="name" v-model="user.displayName">
+        <input class="input" type="password" name="password" placeholder="pazzword" id="name" v-model="user.password">
+        <button class="btn btn-primary btn-success" type="submit">Regizer</button>
       </form>
+      <br>
+      <div>
+      <img height="300" src="../assets/2bifuv.jpg" class="cat-login">
+      </div>
+      <br>
       <p>Alredy uzer?
         <em @click="toggle">Loginz</em>
       </p>
