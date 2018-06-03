@@ -1,10 +1,13 @@
 <template>
   <div class="boards">
-    <button @click="toggleAdd">Adz Bordz</button>
+    <div>
+    <img height="250" src="../assets/2bjin2.jpg" class="addboardpic">
+    </div>
+    <button class="btn btn-primary btn-success" @click="toggleAdd">Adz Bordz</button>
     <form v-if="toggleBoard" v-on:submit.prevent="addBoard">
       <input type="text" class="input" name=text placeholder="Title" id="b-title" v-model="board.title">
       <input type="text" class="input" name=text placeholder="Dezcrypton" id="b-title" v-model="board.description">
-      <button type="submit">Zummitz</button>
+      <button class="btn btn-primary btn-success" type="submit">Zummitz</button>
     </form>
     <div class="row d-flex justify-content-center">
       <div class="col-md-3 col-sm-12 card d-flex justify-content-around board" v-for="board in boards" :key="board._id">
@@ -63,11 +66,15 @@
 
 <style>
   .board {
-    background-color: #333399;
+    background-color: #6a9c78;
     margin: 3vh;
-    color: white;
+    color: #fff1bc;
     border: 1px solid;
     padding: 10px;
-    box-shadow: 5px 10px #14143b;
+    box-shadow: 5px 5px #fff1bc;
+  }
+  .addboardpic{
+    border-radius: 2rem;
+    box-shadow: 5px 5px #fff1bc;
   }
 </style>

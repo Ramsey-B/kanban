@@ -1,6 +1,7 @@
 <template>
   <div class="lists">
     <h2 v-if="activeBoard._id">{{activeBoard.title}}</h2>
+    <img height="200" src="../assets/nyancatr.gif">
     <addList></addList>
     <div class="row d-flex justify-content-center">
       <draggable v-model="lists" class="d-flex flex-row">

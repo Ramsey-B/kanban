@@ -46,15 +46,15 @@
     text-align: center;
     color: #fff1bc;
     background-color: #446e5c;
-    position: fixed;
+    background-size: cover;
     padding: 0;
     margin: 0;
 
     top: 0;
     left: 0;
 
-    width: 100%;
-    height: 100%;
+    min-width: 100%;
+    min-height: 100%;
     /* margin-top: 60px; */
   }
 </style>

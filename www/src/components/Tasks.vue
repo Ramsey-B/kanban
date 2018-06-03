@@ -4,12 +4,12 @@
       <h6 class="task-description">{{task.description}}</h6>
       <p class='task-comment'>{{task.comment}}</p>
     </div>
-    <button @click="removeTask(task)">Iz completez</button>
-    <button @click="toggleEdit(task)">edit</button>
+    <button class="btn btn-primary btn-info" @click="removeTask(task)">Iz completez</button>
+    <button class="btn btn-primary btn-warning" @click="toggleEdit(task)">edit</button>
     <form v-on:submit.prevent="editTask" v-if="editToggle">
-      <input type="text" v-model="edit.description" placeholder="description">
-      <input type="text" v-model="edit.comment" placeholder="comment">
-      <button type="submit">Zummitz</button>
+      <input type="text" v-model="edit.description" placeholder="dezcrypton">
+      <input type="text" v-model="edit.comment" placeholder="commetz">
+      <button class="btn btn-primary btn-success" type="submit">Zummitz</button>
     </form>
   </div>
 </template>
@@ -62,6 +62,7 @@
 <style>
   .task {
     display: block;
+    background-color:#7dc383;
   }
 
   .task:hover .task-comment {
