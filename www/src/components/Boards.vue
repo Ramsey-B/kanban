@@ -2,8 +2,8 @@
   <div class="boards">
     <button @click="toggleAdd">Adz Bordz</button>
     <form v-if="toggleBoard" v-on:submit.prevent="addBoard">
-      <input type="text" v-model="board.title">
-      <input type="text" v-model="board.description">
+      <input type="text" class="input" name=text placeholder="Title" id="b-title" v-model="board.title">
+      <input type="text" class="input" name=text placeholder="Dezcrypton" id="b-title" v-model="board.description">
       <button type="submit">Zummitz</button>
     </form>
     <div class="row d-flex justify-content-center">

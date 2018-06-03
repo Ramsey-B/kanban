@@ -3,8 +3,8 @@
     <button @click="toggleAdd">Adz Liz</button>
     <div v-if="toggleList">
       <form v-on:submit.prevent="addList">
-        <input type="text" v-model="list.title" placeholder="List title" required>
-        <input type="text" v-model="list.description" placeholder="description">
+        <input type="text" v-model="list.title" placeholder="Liz Title" required>
+        <input type="text" v-model="list.description" placeholder="Dezcrypton">
         <button type="submit">Zummitz</button>
       </form>
     </div>
