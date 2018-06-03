@@ -6,9 +6,6 @@
         <router-link :to="{ name: 'Home'}" class="navbar-brand">
           <a>Hom</a>
         </router-link>
-        <!-- <router-link :to="{ name: 'Playlists'}" class="navbar-brand" v-if="user._id" @click="getPosts">
-          Playlists
-        </router-link> -->
       </div>
       <a class="navbar-brand" @click="login" v-if="!(user._id)">Zign In/Loginz</a>
       <div v-if="user._id" class="d-flex flex-column">
@@ -31,7 +28,7 @@
 
     methods: {
       login() {
-        this.$router.push({name: 'User'})
+        this.$router.push({ name: 'User' })
       },
       signOut() {
         this.$store.dispatch('signOut')
@@ -49,6 +46,15 @@
     text-align: center;
     color: #fff1bc;
     background-color: #446e5c;
+    position: fixed;
+    padding: 0;
+    margin: 0;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
     /* margin-top: 60px; */
   }
 </style>
