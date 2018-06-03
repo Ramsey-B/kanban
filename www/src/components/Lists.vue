@@ -1,6 +1,6 @@
 <template>
   <div class="lists">
-    <h2 v-if="activeBoard._id">{{activeBoard.title}}</h2>
+    <h2 v-if="activeBoard._id" class="board-title">{{activeBoard.title}}</h2>
     <addList></addList>
     <div class="row d-flex justify-content-center">
       <draggable v-model="lists" class="d-flex flex-row">
@@ -60,4 +60,8 @@
 </script>
 
 <style>
+  .board-title {
+    display: inline;
+    border-bottom: 2px solid;
+  }
 </style>

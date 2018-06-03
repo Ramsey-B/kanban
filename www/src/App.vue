@@ -7,6 +7,7 @@
           <a>Hom</a>
         </router-link>
       </div>
+      <h1>KanzBanz</h1>
       <a class="navbar-brand" @click="login" v-if="!(user._id)">Zign In/Loginz</a>
       <div v-if="user._id" class="d-flex flex-column">
         <a class="navbar-brand">Uzer: {{user.displayName}}</a>

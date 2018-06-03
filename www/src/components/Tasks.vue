@@ -1,20 +1,24 @@
 <template>
   <div class="tasks">
     <div class="task">
-      <h6 class="task-description">{{task.description}}</h6>
+      <h4 class="task-description">{{task.description}}</h4>
       <p class='task-comment'>{{task.comment}}</p>
     </div>
-    <button @click="removeTask(task)">Iz completez</button>
-    <button @click="toggleEdit(task)">edit</button>
+    <button class="btn btn-danger my-btn" @click="removeTask(task)">Iz completez</button>
+    <a class="edit" @click="toggleEdit(task)" style="color: #5cb85c">
+        <font-awesome-icon icon="edit" />
+    </a>
     <form v-on:submit.prevent="editTask" v-if="editToggle">
       <input type="text" v-model="edit.description" placeholder="description">
       <input type="text" v-model="edit.comment" placeholder="comment">
-      <button type="submit">Zummitz</button>
+      <button class="btn btn-primary my-btn" type="submit">Zummitz</button>
     </form>
   </div>
 </template>
 
 <script>
+  import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
+
   export default {
     name: 'Tasks',
     props: {
@@ -22,6 +26,9 @@
         type: Object,
         required: true
       }
+    },
+    components: {
+      FontAwesomeIcon
     },
     data() {
       return {
@@ -70,5 +77,12 @@
 
   .task-comment {
     display: none;
+  }
+  .my-btn {
+    border-radius: 15px;
+    margin: 2vh
+  }
+  .task-description {
+    border-bottom: 2px solid;
   }
 </style>

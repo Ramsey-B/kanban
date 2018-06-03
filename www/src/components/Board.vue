@@ -1,22 +1,24 @@
 <template>
   <div>
     <router-link :to="{ name: 'Lists', params: { id: board._id }}">
-      <h2>{{board.title}}</h2>
+      <h2 class="board-title">{{board.title}}</h2>
       <h4>description: {{board.description}}</h4>
       <h5>lists: {{board.lists.length}}</h5>
       <h6>author: {{board.author}}</h6>
     </router-link>
-    <button @click="removeBoard(board._id)">Deletz itz</button>
-    <button @click="toggleEdit(board)">edit</button>
+    <button class="btn btn-danger my-btn" @click="removeBoard(board._id)">Deletz itz</button>
+    <a class="edit" @click="toggleEdit(board)" style="color: #5cb85c"><font-awesome-icon icon="edit"/></a>
     <form v-if='editBoard' v-on:submit.prevent="changeBoard">
       <input type="text" v-model="edit.title" placeholder="title">
       <input type="text" v-model="edit.description" placeholder="description">
-      <button type="submit">Zummitz</button>
+      <button class="btn btn-primary my-btn" type="submit">Zummitz</button>
     </form>
   </div>
 </template>
 
 <script>
+  import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
+
   export default {
     name: 'Board',
     props: {
@@ -24,6 +26,9 @@
         type: Object,
         required: true
       }
+    },
+    components: {
+      FontAwesomeIcon
     },
     data() {
       return {
@@ -55,4 +60,11 @@
 </script>
 
 <style>
+  .my-btn {
+    border-radius: 15px;
+    margin: 2vh
+  }
+  .board-title {
+    border-bottom: 2px solid;
+  }
 </style>

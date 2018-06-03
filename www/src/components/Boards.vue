@@ -1,10 +1,10 @@
 <template>
   <div class="boards">
-    <button @click="toggleAdd">Adz Bordz</button>
+    <button class="btn btn-primary my-btn" @click="toggleAdd">Adz Bordz</button>
     <form v-if="toggleBoard" v-on:submit.prevent="addBoard">
       <input type="text" class="input" name=text placeholder="Title" id="b-title" v-model="board.title">
       <input type="text" class="input" name=text placeholder="Dezcrypton" id="b-title" v-model="board.description">
-      <button type="submit">Zummitz</button>
+      <button class="btn btn-primary my-btn" type="submit">Zummitz</button>
     </form>
     <div class="row d-flex justify-content-center">
       <div class="col-md-3 col-sm-12 card d-flex justify-content-around board" v-for="board in boards" :key="board._id">
@@ -69,5 +69,9 @@
     border: 1px solid;
     padding: 10px;
     box-shadow: 5px 10px #14143b;
+  }
+  .my-btn {
+    border-radius: 15px;
+    margin: 2vh
   }
 </style>
