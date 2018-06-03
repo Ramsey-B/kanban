@@ -44,11 +44,11 @@
 <style>
   #app {
     font-family: 'Chewy', cursive;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+    /* -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale; */
     text-align: center;
     color: #fff1bc;
     background-color: #446e5c;
-    margin-top: 60px;
+    /* margin-top: 60px; */
   }
 </style>
