@@ -58,11 +58,14 @@ router.put('/board/:id/list/', (req, res) => {
       req.body.boardId = req.params.id
       board.lists.addToSet(req.body)
       board.save().then(newBoard => {
+        var test = newBoard
         res.status(200).send(newBoard)
+      }).catch(err => {
+        res.status(500).send({ message: "erroz", err })
       })
     })
     .catch(err => {
-      res.send(400).send({ message: "erroz", err })
+      res.status(400).send({ message: "erroz", err })
     })
 })
 

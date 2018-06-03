@@ -137,25 +137,39 @@ export default new vuex.Store({
       task['author'] = state.user.displayName
       var date = new Date()
       task['created'] = date.getTime()
-      server.put('/board/' +state.activeBoard._id+'/list/'+task.listId+'/task/', task) 
-       .then(res => {
-         commit('setActiveBoard', res.data)
-       })
-       .catch(err => {
-        console.log(err)
+      task['userId'] = state.user._id
+      var lists = state.activeBoard.lists
+      var listIndex = lists.findIndex(list => {
+        return task.listId == list._id
       })
+      state.activeBoard.lists[listIndex].tasks.unshift(task)
+      dispatch('editBoard', state.activeBoard)
+      // server.put('/board/' +state.activeBoard._id+'/list/'+task.listId+'/task/', task) 
+      //  .then(res => {
+      //    commit('setActiveBoard', res.data)
+      //  })
+      //  .catch(err => {
+      //   console.log(err)
+      // })
     },
     addList({dispatch, commit, state}, list) {
       list['author'] = state.user.displayName
       var date = new Date()
       list['created'] = date.getTime()
-      server.put('/board/'+state.activeBoard._id+'/list/', list) 
-       .then(res => {
-         commit('setActiveBoard', res.data)
-       })
-       .catch(err => {
-        console.log(err)
-      })
+      list['userId'] = state.user._id
+      list['boardId'] = state.activeBoard._id
+      state.activeBoard.lists.unshift(list)
+      dispatch('editBoard', state.activeBoard)
+      // list['author'] = state.user.displayName
+      // var date = new Date()
+      // list['created'] = date.getTime()
+      // server.put('/board/'+state.activeBoard._id+'/list/', list) 
+      //  .then(res => {
+      //    commit('setActiveBoard', res.data)
+      //  })
+      //  .catch(err => {
+      //   console.log(err)
+      // })
     },
     deleteBoard({dispatch, commit}, id) {
       server.delete('/board/'+id)

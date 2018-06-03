@@ -16,6 +16,7 @@
 
 <script>
   import board from './Board'
+  import router from '../router'
   export default {
     name: 'Boards',
     components: {

@@ -27,7 +27,8 @@ var listSchema = new Schema({
     type: ObjectId,
     ref: "User",
     required: true
-  }
+  },
+  boardId: {type: String, required: true}
 })
 
 var boardSchema = new Schema({
