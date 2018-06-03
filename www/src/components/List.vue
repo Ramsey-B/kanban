@@ -3,11 +3,11 @@
     <h2>{{list.title}}</h2>
     <h4>description: {{list.description}}</h4>
     <h6>author: {{list.author}}</h6>
-    <button @click="taskToggle">Add Task</button>
+    <button @click="taskToggle">Adz Tazk</button>
     <form v-on:submit.prevent="addTask(list._id)" v-if="toggleTask">
       <input type="text" v-model="task.description" placeholder="description">
       <input type="text" v-model="task.comment" placeholder="comment">
-      <button type="submit">submit</button>
+      <button type="submit">Zummitz</button>
     </form>
     <h5>Tasks</h5>
     <draggable :id="list._id" class="dragArea" v-model="tasks" :options="{draggable: '.task-item', group: 'tasks'}">
@@ -20,7 +20,7 @@
     <form v-on:submit.prevent="editList" v-if="editToggle">
       <input type="text" v-model="edit.title" placeholder="title">
       <input type="text" v-model="edit.description" placeholder="description">
-      <button type="submit">submit</button>
+      <button type="submit">Zummitz</button>
     </form>
   </div>
 </template>
