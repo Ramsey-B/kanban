@@ -29,7 +29,10 @@
         this.toggleList = !this.toggleList
       },
       addList() {
-        var newList = this.list
+        var newList = {
+          title: this.list.title,
+          description: this.list.description
+        }
         this.$store.dispatch('addList', newList)
         this.list.title = ''
         this.list.description = ''
