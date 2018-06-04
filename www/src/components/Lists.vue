@@ -1,7 +1,7 @@
 <template>
   <div class="lists">
     <h2 v-if="activeBoard._id">{{activeBoard.title}}</h2>
-    <img height="200" src="../assets/nyancatr.gif">
+    <img height="150" src="../assets/nyancatr.gif">
     <addList></addList>
     <div class="row d-flex justify-content-center">
       <draggable v-model="lists" class="d-flex flex-row">
@@ -9,7 +9,17 @@
         <list :list="list" :index="index"></list>
       </div>
       </draggable>
-    </div>
+      <img height="100" src="../assets/pusheenramen.gif">
+      <img height="100" src="../assets/pusheencheetos.gif">
+      <img height="100" src="../assets/pusheencookie.gif">
+      <img height="100" src="../assets/pusheenicecream.gif">
+      <img height="100" src="../assets/pusheenpizza.gif">
+      <img height="100" src="../assets/pusheensushi.gif">
+      <img height="100" src="../assets/pikapusheen.gif">
+      <img height="100" src="../assets/pusheendragon.gif">
+      <img height="100" src="../assets/pusheencatniss.gif">
+      <img height="100" src="../assets/pusheenhp.gif">
+    </div> 
   </div>
 </template>
 

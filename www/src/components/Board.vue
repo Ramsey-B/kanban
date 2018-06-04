@@ -6,12 +6,12 @@
       <h5>lists: {{board.lists.length}}</h5>
       <h6>author: {{board.author}}</h6>
     </router-link>
-    <button class="btn btn-primary btn-danger" @click="removeBoard(board._id)">Deletz itz</button>
-    <button class="btn btn-primary btn-warning" @click="toggleEdit(board)">edit</button>
+    <button class="btn btn-primary btn-danger my-btn" @click="removeBoard(board._id)">Deletz itz</button>
+    <button class="btn btn-primary btn-warning my-btn" @click="toggleEdit(board)">edit</button>
     <form v-if='editBoard' v-on:submit.prevent="changeBoard">
       <input type="text" v-model="edit.title" placeholder="title">
       <input type="text" v-model="edit.description" placeholder="dezcrypton">
-      <button class="btn btn-primary btn-success" type="submit">Zummitz</button>
+      <button class="btn btn-primary btn-success my-btn" type="submit">Zummitz</button>
     </form>
   </div>
 </template>

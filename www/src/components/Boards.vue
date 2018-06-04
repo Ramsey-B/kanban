@@ -3,11 +3,11 @@
     <div>
     <img height="250" src="../assets/2bjin2.jpg" class="addboardpic">
     </div>
-    <button class="btn btn-primary btn-success" @click="toggleAdd">Adz Bordz</button>
+    <button class="btn btn-primary btn-success my-btn" @click="toggleAdd">Adz Bordz</button>
     <form v-if="toggleBoard" v-on:submit.prevent="addBoard">
       <input type="text" class="input" name=text placeholder="Title" id="b-title" v-model="board.title">
       <input type="text" class="input" name=text placeholder="Dezcrypton" id="b-title" v-model="board.description">
-      <button class="btn btn-primary btn-success" type="submit">Zummitz</button>
+      <button class="btn btn-primary btn-success my-btn" type="submit">Zummitz</button>
     </form>
     <div class="row d-flex justify-content-center">
       <div class="col-md-3 col-sm-12 card d-flex justify-content-around board" v-for="board in boards" :key="board._id">

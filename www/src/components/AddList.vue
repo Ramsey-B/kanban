@@ -1,11 +1,11 @@
 <template>
   <div class="add-list">
-    <button class="btn btn-primary btn-success" @click="toggleAdd">Adz Liz</button>
+    <button class="btn btn-primary btn-success my-btn" @click="toggleAdd">Adz Liz</button>
     <div v-if="toggleList">
       <form v-on:submit.prevent="addList">
         <input type="text" v-model="list.title" placeholder="Liz Title" required>
         <input type="text" v-model="list.description" placeholder="Dezcrypton">
-        <button class="btn btn-primary btn-success" type="submit">Zummitz</button>
+        <button class="btn btn-primary btn-success my-btn" type="submit">Zummitz</button>
       </form>
     </div>
   </div>
