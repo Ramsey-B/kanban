@@ -3,8 +3,9 @@
     <!-- <img src="./assets/logo.png"> -->
     <nav class="navbar navbar-light top-header">
       <div>
+        <img height="100" src="./assets/nyancatballoon.gif">
         <router-link :to="{ name: 'Home'}" class="navbar-brand">
-          <a>Hom</a>
+            <a>Hom</a>
         </router-link>
       </div>
       <div>
@@ -12,6 +13,8 @@
       </div>
       <a class="navbar-brand" @click="login" v-if="!(user._id)">Zign In/Loginz</a>
       <div v-if="user._id" class="d-flex flex-column">
+          <img height="50
+          " src="./assets/Pikanyan.gif">
         <a class="navbar-brand">Uzer: {{user.displayName}}</a>
         <a class="navbar-brand" @click="signOut">Zign out</a>
       </div>
@@ -56,8 +59,13 @@
     top: 0;
     left: 0;
 
-    min-width: 100%;
-    min-height: 100%;
+    max-width: 100%;
+    max-height: 100%;
+    
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
     /* margin-top: 60px; */
   }
 </style>

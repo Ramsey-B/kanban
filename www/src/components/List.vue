@@ -9,7 +9,7 @@
       <input type="text" v-model="task.comment" placeholder="comment">
       <button class="btn btn-primary btn-success my-btn" type="submit">Zummitz</button>
     </form>
-    <h5>Tasks</h5>
+    <h5>Taskz</h5>
     <draggable :id="list._id" class="dragArea" v-model="tasks" :options="{draggable: '.task-item', group: 'tasks'}">
       <div v-for="task in tasks" class="task-item">
         <tasks :task="task"></tasks>
