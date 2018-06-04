@@ -51,8 +51,8 @@
     -moz-osx-font-smoothing: grayscale; */
     text-align: center;
     color: #fff1bc;
-    background-color: #446e5c;
-    background-size: cover;
+    /* background-color: #446e5c;
+    background-size: cover; */
     padding: 0;
     margin: 0;
 
@@ -68,4 +68,5 @@
     background-size: cover;
     /* margin-top: 60px; */
   }
+  
 </style>
