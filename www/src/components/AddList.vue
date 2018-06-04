@@ -43,6 +43,8 @@
 </script>
 
 <style>
-
-
+  .my-btn {
+    border-radius: 15px;
+    margin: 2vh
+  }
 </style>

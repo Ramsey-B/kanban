@@ -77,4 +77,8 @@
     border-radius: 2rem;
     box-shadow: 5px 5px #fff1bc;
   }
+  .my-btn {
+    border-radius: 15px;
+    margin: 2vh
+  }
 </style>

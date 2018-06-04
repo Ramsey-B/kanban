@@ -1,7 +1,7 @@
 <template>
   <div class="tasks">
     <div class="task">
-      <h6 class="task-description">{{task.description}}</h6>
+      <h4 class="task-description">{{task.description}}</h4>
       <p class='task-comment'>{{task.comment}}</p>
     </div>
     <button class="btn btn-primary btn-info" @click="removeTask(task)">Iz completez</button>
@@ -15,6 +15,8 @@
 </template>
 
 <script>
+  import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
+
   export default {
     name: 'Tasks',
     props: {
@@ -22,6 +24,9 @@
         type: Object,
         required: true
       }
+    },
+    components: {
+      FontAwesomeIcon
     },
     data() {
       return {
@@ -71,5 +76,12 @@
 
   .task-comment {
     display: none;
+  }
+  .my-btn {
+    border-radius: 15px;
+    margin: 2vh
+  }
+  .task-description {
+    border-bottom: 2px solid;
   }
 </style>

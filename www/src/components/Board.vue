@@ -1,7 +1,7 @@
 <template>
   <div>
     <router-link :to="{ name: 'Lists', params: { id: board._id }}">
-      <h2>{{board.title}}</h2>
+      <h2 class="board-title">{{board.title}}</h2>
       <h4>description: {{board.description}}</h4>
       <h5>lists: {{board.lists.length}}</h5>
       <h6>author: {{board.author}}</h6>
@@ -17,6 +17,8 @@
 </template>
 
 <script>
+  import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
+
   export default {
     name: 'Board',
     props: {
@@ -24,6 +26,9 @@
         type: Object,
         required: true
       }
+    },
+    components: {
+      FontAwesomeIcon
     },
     data() {
       return {
@@ -55,4 +60,11 @@
 </script>
 
 <style>
+  .my-btn {
+    border-radius: 15px;
+    margin: 2vh
+  }
+  .board-title {
+    border-bottom: 2px solid;
+  }
 </style>

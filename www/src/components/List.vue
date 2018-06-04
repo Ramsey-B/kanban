@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h2>{{list.title}}</h2>
+    <h2 class="list-title">{{list.title}}</h2>
     <h4>description: {{list.description}}</h4>
     <h6>author: {{list.author}}</h6>
     <button class="btn btn-primary btn-success" @click="taskToggle">Adz Tazk</button>
@@ -28,11 +28,14 @@
 <script>
   import tasks from './Tasks'
   import draggable from 'vuedraggable'
+  import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
+
   export default {
     name: 'List',
     components: {
       tasks,
-      draggable
+      draggable,
+      FontAwesomeIcon
     },
     props: {
       list: {
@@ -129,6 +132,27 @@
   }
 
   .dragArea {
-    min-height: 3vh
+    min-height: 3vh;
+    background-color: #336699;
+    margin: 3vh;
+    color: white;
+    border: 1px solid;
+    padding: 10px;
+    box-shadow: 5px 10px #14143b;
+  }
+
+  .my-btn {
+    border-radius: 15px;
+    margin: 2vh
+  }
+
+  .tasks-box {
+    background-color: #993333;
+    margin: 3vh;
+    color: white;
+    border: 1px solid;
+  }
+  .list-title {
+    border-bottom: 2px solid;
   }
 </style>

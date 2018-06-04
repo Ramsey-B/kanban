@@ -61,4 +61,8 @@
 </script>
 
 <style>
+  .board-title {
+    display: inline;
+    border-bottom: 2px solid;
+  }
 </style>
