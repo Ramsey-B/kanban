@@ -54,8 +54,6 @@ router.put('/board/:id', (req, res) => {
 router.put('/board/:id/list/', (req, res) => {
   Boards.findById(req.params.id)
     .then(board => {
-      req.body.userId = req.session.uid
-      req.body.boardId = req.params.id
       board.lists.addToSet(req.body)
       board.save().then(newBoard => {
         var test = newBoard
@@ -74,8 +72,6 @@ router.put('/board/:id/list/:listId/task/', (req, res) => {
   Boards.findById(req.params.id)
     .then(board => {
       var list = board.lists.id(req.params.listId)
-      req.body.userId = req.session.uid
-      req.body.listId = req.params.listId
       list.tasks.addToSet(req.body)
       board.save().then(newBoard => {
         res.status(200).send(newBoard)
@@ -108,6 +104,9 @@ router.delete('/board/:id/list/:listId', (req, res) => {
       board.lists.splice(index, 1)
       board.save().then(newBoard => {
         res.status(200).send(newBoard)
+      })
+      .catch(err => {
+        res.status(500).send({ message: "oh noes it brokez", err })
       })
     })
     .catch(err => {

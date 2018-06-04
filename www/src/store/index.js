@@ -137,7 +137,6 @@ export default new vuex.Store({
       task['author'] = state.user.displayName
       var date = new Date()
       task['created'] = date.getTime()
-      task['userId'] = state.user._id
       // var lists = state.activeBoard.lists
       // var listIndex = lists.findIndex(list => {
       //   return task.listId == list._id

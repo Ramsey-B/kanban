@@ -8,13 +8,7 @@ var taskSchema = new Schema({
   author: {type: String},
   description: {type: String, required: true},
   created: { type: Number, required: true, default: Date.now() },
-  comment: {type: String},
-  userId: {
-    type: ObjectId,
-    ref: "User",
-    required: true
-  },
-  listId: {type: String, required: true}
+  comment: {type: String}
 })
 
 var listSchema = new Schema({
@@ -22,13 +16,7 @@ var listSchema = new Schema({
   author: {type: String},
   description: {type: String},
   created: { type: Number, required: true, default: Date.now() },
-  tasks: [taskSchema],
-  userId: {
-    type: ObjectId,
-    ref: "User",
-    required: true
-  },
-  boardId: {type: String, required: true}
+  tasks: [taskSchema]
 })
 
 var boardSchema = new Schema({
