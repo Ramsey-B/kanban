@@ -3,11 +3,11 @@
     <img height="125" src="../assets/nyancatr.gif">
     <h2 v-if="activeBoard._id">{{activeBoard.title}}</h2>
     <addList></addList>
-    <div class="row d-flex justify-content-center">
-      <draggable v-model="lists" class="d-flex flex-row">
-      <div v-if="activeBoard._id" v-for="(list, index) in lists" class="col-md-4 d-flex justify-content-around card list" :key="list._id">
-        <list :list="list" :index="index"></list>
-      </div>
+    <div>
+      <draggable v-model="lists" class="row d-flex justify-content-center">
+        <div v-if="activeBoard._id" v-for="(list, index) in lists" class="col-3 d-flex justify-content-around card list" :key="list._id">
+          <list :list="list" :index="index"></list>
+        </div>
       </draggable>
       <img height="100" src="../assets/pusheenramen.gif">
       <img height="100" src="../assets/pusheencheetos.gif">
@@ -19,7 +19,7 @@
       <img height="100" src="../assets/pusheendragon.gif">
       <img height="100" src="../assets/pusheencatniss.gif">
       <img height="100" src="../assets/pusheenhp.gif">
-    </div> 
+    </div>
   </div>
 </template>
 
@@ -28,6 +28,7 @@
   import draggable from 'vuedraggable'
   import list from './List'
   import router from '../router'
+
   export default {
     name: 'Lists',
     components: {
@@ -38,8 +39,8 @@
     },
     mounted() {
       this.$store.dispatch('selectBoard', this.$route.params.id)
-      if(!this.$store.state.user._id){
-        router.push({name: 'User'})
+      if (!this.$store.state.user._id) {
+        router.push({ name: 'User' })
       }
     },
     data() {
@@ -51,10 +52,10 @@
         return this.$store.state.activeBoard
       },
       lists: {
-        get: function() {
+        get: function () {
           return this.$store.state.activeBoard.lists
         },
-        set: function(lists) {
+        set: function (lists) {
           this.editBoard(lists)
         }
       }
@@ -75,5 +76,4 @@
     display: inline;
     border-bottom: 2px solid;
   }
-  
 </style>
