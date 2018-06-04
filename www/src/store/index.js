@@ -137,7 +137,6 @@ export default new vuex.Store({
       task['author'] = state.user.displayName
       var date = new Date()
       task['created'] = date.getTime()
-      debugger
       // var lists = state.activeBoard.lists
       // var listIndex = lists.findIndex(list => {
       //   return task.listId == list._id
@@ -158,7 +157,6 @@ export default new vuex.Store({
       // list['created'] = date.getTime()
       // list['userId'] = state.user._id
       // list['boardId'] = state.activeBoard._id
-      // debugger
       // state.activeBoard.lists.unshift(list)
       // dispatch('editBoard', state.activeBoard)
       list['author'] = state.user.displayName
