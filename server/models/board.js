@@ -8,7 +8,7 @@ var taskSchema = new Schema({
   author: {type: String},
   description: {type: String, required: true},
   created: { type: Number, required: true, default: Date.now() },
-  comment: {type: String},
+  comments: [{type: String}],
   listId: {type: String, required: true}
 })
 

@@ -1,14 +1,22 @@
 <template>
   <div class="tasks">
     <div class="task">
-      <h4 class="task-description">{{task.description}}</h4>
-      <p class='task-comment'>{{task.comment}}</p>
+      <a @click="toggleComments">
+        <h4 class="task-description">{{task.description}}</h4>
+      </a>
+      <div v-if="showComments">
+        <p class='task-comment' v-for='(comment, index) in task.comments'>{{comment}} <a @click='deleteComment(index)'><font-awesome-icon class="delete" :icon="icon[1]"/></a></p>
+        <a @click="addCommentToggle" v-if="!commentToggle"><font-awesome-icon :icon="icon[0]"/></a>
+        <form v-on:submit.prevent="addComment(task)" v-if="commentToggle">
+          <input type="text" v-model="comment" placeholder="commetz">
+          <button class="btn btn-primary btn-success my-btn" type="submit">Zummitz</button>
+        </form>
+      </div>
     </div>
     <button class="btn btn-primary btn-info my-btn" @click="removeTask(task)">Iz completez</button>
     <button class="btn btn-primary btn-warning my-btn" @click="toggleEdit(task)">edit</button>
     <form v-on:submit.prevent="editTask" v-if="editToggle">
       <input type="text" v-model="edit.description" placeholder="dezcrypton">
-      <input type="text" v-model="edit.comment" placeholder="commetz">
       <button class="btn btn-primary btn-success my-btn" type="submit">Zummitz</button>
     </form>
   </div>
@@ -16,6 +24,8 @@
 
 <script>
   import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
+  import faPlusCircle from '@fortawesome/fontawesome-free-solid/faPlusCircle'
+  import faTimes from '@fortawesome/fontawesome-free-solid/faTimes'
 
   export default {
     name: 'Tasks',
@@ -36,12 +46,18 @@
           comment: '',
           listId: '',
           _id: ''
-        }
+        },
+        showComments: false,
+        commentToggle: false,
+        comment: ''
       }
     },
     computed: {
       tasks() {
         return this.$store.state.activeList.tasks
+      },
+      icon() {
+        return [faPlusCircle, faTimes] 
       }
     },
     methods: {
@@ -58,6 +74,22 @@
       editTask() {
         this.$store.dispatch('editTask', this.edit)
         this.editToggle = !this.editToggle
+      },
+      toggleComments() {
+        this.showComments = !this.showComments
+      },
+      addCommentToggle() {
+        this.commentToggle = !this.commentToggle
+      },
+      addComment(task) {
+        task.comments.push(this.comment)
+        this.$store.dispatch('editTask', this.task)
+        this.comment = ''
+        this.commentToggle = !this.commentToggle
+      },
+      deleteComment(index) {
+        this.task.comments.splice(index, 1)
+        this.$store.dispatch('editTask', this.task)
       }
     }
   }
@@ -67,21 +99,19 @@
 <style>
   .task {
     display: block;
-    background-color:#7dc383;
+    background-color: #7dc383;
   }
 
-  .task:hover .task-comment {
-    display: block;
-  }
-
-  .task-comment {
-    display: none;
-  }
   .my-btn {
     border-radius: 15px;
     margin: 2vh
   }
+
   .task-description {
     border-bottom: 2px solid;
+  }
+
+  .delete {
+    color: red;
   }
 </style>

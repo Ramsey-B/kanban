@@ -6,7 +6,6 @@
     <button class="btn btn-primary btn-success my-btn" @click="taskToggle">Adz Tazk</button>
     <form v-on:submit.prevent="addTask(list._id)" v-if="toggleTask">
       <input type="text" v-model="task.description" placeholder="dezcrypton">
-      <input type="text" v-model="task.comment" placeholder="comment">
       <button class="btn btn-primary btn-success my-btn" type="submit">Zummitz</button>
     </form>
     <h5>Taskz</h5>
