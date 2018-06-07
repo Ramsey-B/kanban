@@ -5,8 +5,8 @@
         <h4 class="task-description">{{task.description}}</h4>
       </a>
       <div v-if="showComments">
-        <div class="comment">
-          <p class='task-comment' v-for='(comment, index) in task.comments'>{{comment}}  
+        <div class="comment" v-for='(comment, index) in task.comments'>
+          <p class='task-comment'>{{comment}}  
             <a @click='deleteComment(index)'>
               <font-awesome-icon class="delete" :icon="icon[1]" />
             </a>
@@ -124,7 +124,7 @@
   }
 
   .comment {
-    margin: 2vh;
+    margin: 1vh 2vh 1vh 2vh;
     background: #6a9c78
   }
 </style>
