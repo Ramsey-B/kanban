@@ -5,8 +5,16 @@
         <h4 class="task-description">{{task.description}}</h4>
       </a>
       <div v-if="showComments">
-        <p class='task-comment' v-for='(comment, index) in task.comments'>{{comment}} <a @click='deleteComment(index)'><font-awesome-icon class="delete" :icon="icon[1]"/></a></p>
-        <a @click="addCommentToggle" v-if="!commentToggle"><font-awesome-icon :icon="icon[0]"/></a>
+        <div class="comment">
+          <p class='task-comment' v-for='(comment, index) in task.comments'>{{comment}}  
+            <a @click='deleteComment(index)'>
+              <font-awesome-icon class="delete" :icon="icon[1]" />
+            </a>
+          </p>
+        </div>
+        <a @click="addCommentToggle" v-if="!commentToggle">
+          <font-awesome-icon :icon="icon[0]" />
+        </a>
         <form v-on:submit.prevent="addComment(task)" v-if="commentToggle">
           <input type="text" v-model="comment" placeholder="commetz">
           <button class="btn btn-primary btn-success my-btn" type="submit">Zummitz</button>
@@ -57,7 +65,7 @@
         return this.$store.state.activeList.tasks
       },
       icon() {
-        return [faPlusCircle, faTimes] 
+        return [faPlusCircle, faTimes]
       }
     },
     methods: {
@@ -113,5 +121,10 @@
 
   .delete {
     color: red;
+  }
+
+  .comment {
+    margin: 2vh;
+    background: #6a9c78
   }
 </style>
