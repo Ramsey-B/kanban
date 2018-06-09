@@ -17,7 +17,8 @@ export default new vuex.Store({
   state: {
     user: {},
     boards: [],
-    activeBoard: {}
+    activeBoard: {},
+    demo: false
   },
   mutations: {
     setUser(state, user) {
@@ -55,7 +56,10 @@ export default new vuex.Store({
         return task._id == task._id
       })
       state.activeBoard.lists[listIndex].tasks.splice(index, 1)
-    }   
+    },
+    setDemo(state) {
+      state.demo = !state.demo
+    }
   },
   actions: {
     login({ dispatch, commit }, payload) {
@@ -237,6 +241,15 @@ export default new vuex.Store({
       edit['created'] = date.getTime()
       state.activeBoard.lists[listIndex].tasks.unshift(edit)
       dispatch('editBoard', state.activeBoard)
+    },
+    startDemo({dispatch, commit}) {
+      var demoUser = {
+        email: 'demo@demo.com',
+        displayName: 'Demo',
+        password: 'demo'
+      }
+      dispatch('register', demoUser)
+      commit('setDemo')
     }
   }
 })
