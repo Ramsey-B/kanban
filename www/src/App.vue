@@ -11,7 +11,7 @@
       <div>
       <h1>KanzBanz</h1>
       </div>
-      <button @click="startDemo">Demo</button>
+      <button @click="startDemo" v-if="!user._id">Demo</button>
       <a class="navbar-brand" @click="login" v-if="!(user._id)">Zign In/Loginz</a>
       <div v-if="user._id" class="d-flex flex-column">
           <img height="50
