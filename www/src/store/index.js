@@ -141,12 +141,6 @@ export default new vuex.Store({
       task['author'] = state.user.displayName
       var date = new Date()
       task['created'] = date.getTime()
-      // var lists = state.activeBoard.lists
-      // var listIndex = lists.findIndex(list => {
-      //   return task.listId == list._id
-      // })
-      // state.activeBoard.lists[listIndex].tasks.unshift(task)
-      // dispatch('editBoard', state.activeBoard)
       server.put('/board/' +state.activeBoard._id+'/list/'+task.listId+'/task/', task) 
        .then(res => {
          commit('setActiveBoard', res.data)
@@ -156,13 +150,6 @@ export default new vuex.Store({
       })
     },
     addList({dispatch, commit, state}, list) {
-      // list['author'] = state.user.displayName
-      // var date = new Date()
-      // list['created'] = date.getTime()
-      // list['userId'] = state.user._id
-      // list['boardId'] = state.activeBoard._id
-      // state.activeBoard.lists.unshift(list)
-      // dispatch('editBoard', state.activeBoard)
       list['author'] = state.user.displayName
       var date = new Date()
       list['created'] = date.getTime()

@@ -3,7 +3,7 @@
     <div>
       <img height="250" src="../assets/2bjin2.jpg" class="addboardpic">
     </div>
-    <button id="addBoard" class="btn btn-primary btn-success my-btn" @click="toggleAdd; tour.nextStep">Adz Bordz</button>
+    <button id="addBoard" class="btn btn-primary btn-success my-btn" @click="toggleAdd">Adz Bordz</button>
     <form v-if="toggleBoard" v-on:submit.prevent="addBoard" id="boardForm">
       <input type="text" class="input" name=text placeholder="Title" id="b-title" v-model="board.title">
       <input type="text" class="input" name=text placeholder="Dezcrypton" id="b-title" v-model="board.description">
