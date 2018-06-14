@@ -10,11 +10,31 @@
       <button class="btn btn-primary btn-success my-btn" type="submit">Zummitz</button>
     </form>
     <div class="row d-flex justify-content-center">
-      <div class="col-md-3 col-sm-12 card d-flex justify-content-around board" v-for="board in boards" :key="board._id">
-        <board :board="board"></board>
+      <div class="col-md-3 col-sm-12 card d-flex justify-content-around board" id="boards" v-for="board in boards" :key="board._id">
+        <board :board="board" class="clickBoard"></board>
       </div>
     </div>
-    <v-tour name="boardsTour" :steps="steps"></v-tour>
+    <v-tour name="boardsTour" :steps="steps">
+      <template slot-scope="tour">
+        <transition name="fade">
+          <v-step v-if="tour.currentStep === index" v-for="(step, index) of tour.steps" :key="index" :step="step" :previous-step="tour.previousStep"
+            :next-step="tour.nextStep" :stop="tour.stop" :isFirst="tour.isFirst" :isLast="tour.isLast">
+            <template v-if="tour.currentStep === 0">
+              <div slot="actions">
+                <button @click="tour.stop" class="btn btn-danger">Skip Tour</button>
+                <button @click="toggleAdd()" class="btn btn-primary">Next step</button>
+              </div>
+            </template>
+            <template v-if="tour.currentStep === 1">
+              <div slot="actions">
+                <button @click="tour.stop" class="btn btn-danger">end tour</button>
+                <button @click="addBoard" class="btn btn-primary">Next step</button>
+              </div>
+            </template>
+          </v-step>
+        </transition>
+      </template>
+    </v-tour>
   </div>
 </template>
 
@@ -45,11 +65,11 @@
         steps: [
           {
             target: '#addBoard',  // We're using document.querySelector() under the hood
-            content: `Discover <strong>Vue Tour</strong>!`
+            content: `To get started, we need to create some boards! Click the "Adz Bordz" button to continue!`
           },
           {
             target: '#boardForm',
-            content: 'Fill out the fields to start your first board!'
+            content: 'Great! Fill out the fields to start your first board!'
           }
         ]
       }
@@ -62,6 +82,9 @@
     methods: {
       toggleAdd() {
         this.toggleBoard = !this.toggleBoard
+        if (this.$store.state.demo) {
+          this.$tours['boardsTour'].nextStep()
+        }
       },
       addBoard() {
         var newBoard = {
@@ -72,6 +95,9 @@
         this.board.title = ''
         this.board.description = ''
         this.toggleBoard = !this.toggleBoard
+        if (this.$store.state.demo) {
+          this.$tours['boardsTour'].stop()
+        }
       }
     }
   }

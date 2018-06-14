@@ -105,9 +105,9 @@ router.delete('/board/:id/list/:listId', (req, res) => {
       board.save().then(newBoard => {
         res.status(200).send(newBoard)
       })
-      .catch(err => {
-        res.status(500).send({ message: "oh noes it brokez", err })
-      })
+        .catch(err => {
+          res.status(500).send({ message: "oh noes it brokez", err })
+        })
     })
     .catch(err => {
       res.status(400).send({ message: "oh noes it brokez", err })
@@ -131,6 +131,20 @@ router.delete('/board/:id/list/:listId/task/:taskId', (req, res) => {
     })
 })
 
+router.delete('/end-demo/:id', (req, res) => {
+  Boards.deleteMany({ "userId": req.params.id })
+    .then(data => {
+      req.session.destroy(() => {
+        res.send({
+          message: 'You have successfully been logged out. Please come back soon!'
+        })
+    
+      })
+    })
+    .catch(err => {
+      res.status(400).send(err)
+    })
+})
 
 module.exports = {
   router

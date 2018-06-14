@@ -3,10 +3,10 @@
     <h2 class="list-title">{{list.title}}</h2>
     <h4>description: {{list.description}}</h4>
     <h6>author: {{list.author}}</h6>
-    <button class="btn btn-primary btn-success my-btn" @click="taskToggle">Adz Tazk</button>
+    <button class="btn btn-primary btn-success my-btn" id="addTask" @click="taskToggle">Adz Tazk</button>
     <form v-on:submit.prevent="addTask(list._id)" v-if="toggleTask">
       <input type="text" v-model="task.description" placeholder="dezcrypton">
-      <button class="btn btn-primary btn-success my-btn" type="submit">Zummitz</button>
+      <button id="submitTask" class="btn btn-primary btn-success my-btn" type="submit">Zummitz</button>
     </form>
     <h5>Taskz</h5>
     <draggable :id="list._id" class="dragArea" v-model="tasks" :options="{draggable: '.task-item', group: 'tasks'}">
@@ -14,13 +14,46 @@
         <tasks :task="task"></tasks>
       </div>
     </draggable>
-    <button class="btn btn-primary btn-info my-btn" @click='removeList(list._id)'>All donez</button>
-    <button class="btn btn-primary btn-warning my-btn" @click="toggleEdit(list)">edit</button>
+    <button id="removeList" class="btn btn-primary btn-info my-btn" @click='removeList(list._id)'>All donez</button>
+    <button id="editList" class="btn btn-primary btn-warning my-btn" @click="toggleEdit(list)">edit</button>
     <form v-on:submit.prevent="editList" v-if="editToggle">
       <input type="text" v-model="edit.title" placeholder="title">
       <input type="text" v-model="edit.description" placeholder="dezcrypton">
       <button class="btn btn-primary btn-success my-btn" type="submit">Zummitz</button>
     </form>
+    <v-tour name="listTour" :steps="steps">
+      <template slot-scope="tour">
+        <transition name="fade">
+          <v-step v-if="tour.currentStep === index" v-for="(step, index) of tour.steps" :key="index" :step="step" :previous-step="tour.previousStep"
+            :next-step="tour.nextStep" :stop="tour.stop" :isFirst="tour.isFirst" :isLast="tour.isLast">
+            <template v-if="tour.currentStep === 0">
+              <div slot="actions">
+                <button @click="tour.stop" class="btn btn-danger">Skip Tour</button>
+                <button @click="tour.nextStep" class="btn btn-primary">Next step</button>
+              </div>
+            </template>
+            <template v-if="tour.currentStep === 1">
+              <div slot="actions">
+                <button @click="tour.stop" class="btn btn-danger">Skip Tour</button>
+                <button @click="tour.nextStep" class="btn btn-primary">Next step</button>
+              </div>
+            </template>
+            <template v-if="tour.currentStep === 2">
+              <div slot="actions">
+                <button @click="tour.stop" class="btn btn-danger">Skip Tour</button>
+                <button @click="taskToggle" class="btn btn-primary">Next step</button>
+              </div>
+            </template>
+            <template v-if="tour.currentStep === 3">
+              <div slot="actions">
+                <button @click="tour.stop" class="btn btn-danger">Skip Tour</button>
+                <button @click="tour.stop" class="btn btn-primary">Next step</button>
+              </div>
+            </template>
+          </v-step>
+        </transition>
+      </template>
+    </v-tour>
   </div>
 </template>
 
@@ -61,7 +94,25 @@
         },
         dragStartListId: '',
         dragEndListId: '',
-        draggedTask: null
+        draggedTask: null,
+        steps: [
+          {
+            target: '#editList',  // We're using document.querySelector() under the hood
+            content: `This button displays a form so you can edit a list`
+          },
+          {
+            target: '#removeList',  // We're using document.querySelector() under the hood
+            content: `You can click here to remove a list`
+          },
+          {
+            target: '#addTask',  // We're using document.querySelector() under the hood
+            content: `click this button to display the add task form!`
+          },
+          {
+            target: '#submitTask',  // We're using document.querySelector() under the hood
+            content: `fill out the form to submit a new task!`
+          },
+        ]
       }
     },
     computed: {
@@ -88,6 +139,9 @@
     methods: {
       taskToggle() {
         this.toggleTask = !this.toggleTask
+        if (this.$store.state.demo) {
+          this.$tours['listTour'].nextStep()
+        }
       },
       addTask(id) {
         this.task['listId'] = id
@@ -101,6 +155,9 @@
         this.task.comment = ''
         this.task.listId = ''
         this.toggleTask = !this.toggleTask
+        if (this.$store.state.demo) {
+          this.$tours['listTour'].stop()
+        }
       },
       removeList(id) {
         this.$store.dispatch('deleteList', id)
@@ -132,7 +189,7 @@
 
   .dragArea {
     min-height: 3vh;
-    background-color:#8aae92;
+    background-color: #8aae92;
     margin: 3vh;
     color: #fff1bc;
     border: 1px solid;
@@ -151,6 +208,7 @@
     color: white;
     border: 1px solid;
   }
+
   .list-title {
     border-bottom: 2px solid;
   }

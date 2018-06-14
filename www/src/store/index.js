@@ -18,7 +18,8 @@ export default new vuex.Store({
     user: {},
     boards: [],
     activeBoard: {},
-    demo: false
+    demo: false,
+    tour: ''
   },
   mutations: {
     setUser(state, user) {
@@ -59,6 +60,12 @@ export default new vuex.Store({
     },
     setDemo(state) {
       state.demo = !state.demo
+    },
+    setTour(state, tour) {
+      state.tour = tour
+    },
+    changeDemo(state) {
+      state.demo = !state.demo
     }
   },
   actions: {
@@ -67,6 +74,7 @@ export default new vuex.Store({
         .then(user => {
           router.push('/')
           commit('setUser', user)
+          console.log(user)
         })
         .catch(res => {
           console.log(res.data)
@@ -125,61 +133,62 @@ export default new vuex.Store({
           console.log(res.data)
         })
     },
-    addBoard({dispatch, commit, state}, board) {
+    addBoard({ dispatch, commit, state }, board) {
       board['author'] = state.user.displayName
       var date = new Date()
       board['created'] = date.getTime()
       server.post('/board', board)
-      .then(res => {
-        commit('setBoard', res.data)
-       })
-       .catch(err => {
-        console.log(err)
-      })
+        .then(res => {
+          commit('setBoard', res.data)
+        })
+        .catch(err => {
+          console.log(err)
+        })
     },
-    addTask({dispatch, commit, state}, task) {
+    addTask({ dispatch, commit, state }, task) {
       task['author'] = state.user.displayName
       var date = new Date()
       task['created'] = date.getTime()
-      server.put('/board/' +state.activeBoard._id+'/list/'+task.listId+'/task/', task) 
-       .then(res => {
-         commit('setActiveBoard', res.data)
-       })
-       .catch(err => {
-        console.log(err)
-      })
+      debugger
+      server.put('/board/' + state.activeBoard._id + '/list/' + task.listId + '/task/', task)
+        .then(res => {
+          commit('setActiveBoard', res.data)
+        })
+        .catch(err => {
+          console.log(err)
+        })
     },
-    addList({dispatch, commit, state}, list) {
+    addList({ dispatch, commit, state }, list) {
       list['author'] = state.user.displayName
       var date = new Date()
       list['created'] = date.getTime()
-      server.put('/board/'+state.activeBoard._id+'/list/', list) 
-       .then(res => {
-         commit('setActiveBoard', res.data)
-       })
-       .catch(err => {
-        console.log(err)
-      })
+      server.put('/board/' + state.activeBoard._id + '/list/', list)
+        .then(res => {
+          commit('setActiveBoard', res.data)
+        })
+        .catch(err => {
+          console.log(err)
+        })
     },
-    deleteBoard({dispatch, commit}, id) {
-      server.delete('/board/'+id)
-       .then(res => {
-         commit('updateBoards', id)
-       })
-       .catch(err => {
-         console.log(err)
-       })
+    deleteBoard({ dispatch, commit }, id) {
+      server.delete('/board/' + id)
+        .then(res => {
+          commit('updateBoards', id)
+        })
+        .catch(err => {
+          console.log(err)
+        })
     },
-    deleteList({dispatch, commit, state}, id) {
-      server.delete('/board/'+state.activeBoard._id+'/list/'+id)
-       .then(res => {
-         commit('updateLists', id)
-       })
-       .catch(err => {
-         console.log(err)
-       })
+    deleteList({ dispatch, commit, state }, id) {
+      server.delete('/board/' + state.activeBoard._id + '/list/' + id)
+        .then(res => {
+          commit('updateLists', id)
+        })
+        .catch(err => {
+          console.log(err)
+        })
     },
-    deleteTask({dispatch, commit, state}, task) {
+    deleteTask({ dispatch, commit, state }, task) {
       var lists = state.activeBoard.lists
       var listIndex = lists.findIndex(list => {
         return task.listId == list._id
@@ -191,20 +200,20 @@ export default new vuex.Store({
       list.tasks.splice(taskIndex, 1)
       dispatch('editList', list)
     },
-    editBoard({dispatch, commit, state}, edit) {
+    editBoard({ dispatch, commit, state }, edit) {
       var index = state.boards.findIndex(board => {
         return board._id == edit._id
       })
       state.boards.splice(index, 1)
-      server.put('/board/' +edit._id, edit)
-       .then(res => {
-         commit('setBoard', res.data)
-       })
-       .catch(err => {
-        console.log(err)
-      })
+      server.put('/board/' + edit._id, edit)
+        .then(res => {
+          commit('setBoard', res.data)
+        })
+        .catch(err => {
+          console.log(err)
+        })
     },
-    editList({dispatch, commit, state}, edit){
+    editList({ dispatch, commit, state }, edit) {
       var index = state.activeBoard.lists.findIndex(list => {
         return list._id == edit._id
       })
@@ -215,7 +224,7 @@ export default new vuex.Store({
       state.activeBoard.lists.splice(index, 1, edit)
       dispatch('editBoard', state.activeBoard)
     },
-    editTask({dispatch, commit, state}, edit) {
+    editTask({ dispatch, commit, state }, edit) {
       var listIndex = state.activeBoard.lists.findIndex(list => {
         return list._id == edit.listId
       })
@@ -229,14 +238,29 @@ export default new vuex.Store({
       state.activeBoard.lists[listIndex].tasks.unshift(edit)
       dispatch('editBoard', state.activeBoard)
     },
-    startDemo({dispatch, commit}) {
+    startDemo({ dispatch, commit }) {
       var demoUser = {
         email: 'demo@demo.com',
-        displayName: 'Demo',
         password: 'demo'
       }
-      dispatch('register', demoUser)
+      dispatch('login', demoUser)
       commit('setDemo')
+    },
+    tour({ dispatch, commit }, num) {
+      var tours = ['boardTour']
+      commit('setTour', tours[num])
+    },
+    endDemo({ dispatch, commit, state }) {
+      server.delete('/end-demo/' + state.user._id)
+        .then(res => {
+          console.log(res)
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
+    toggleDemo({dispatch, commit}) {
+      commit('changeDemo')
     }
   }
 })
