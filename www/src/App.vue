@@ -32,8 +32,8 @@
           <div class="mr-2">
             <h4>Madelline Butcher </h4>
             <div class="d-flex flex-row justify-content-center">
-              <a href="" target="_blank"><h4 class="mr-1"><font-awesome-icon :icon="icon[0]" /></h4></a>
-              <a href="" target="_blank"><h4 class="mr-1"><font-awesome-icon :icon="icon[1]" /></h4></a>
+              <a href="https://github.com/madellinebutcher" target="_blank"><h4 class="mr-1"><font-awesome-icon :icon="icon[0]" /></h4></a>
+              <a href="http://linkedin.com/in/madelline-butcher-062a2b149" target="_blank"><h4 class="mr-1"><font-awesome-icon :icon="icon[1]" /></h4></a>
             </div>
           </div>
           <h4> & </h4>
